@@ -128,6 +128,10 @@ function applyTranslations() {
     el.placeholder = t(el.dataset.i18nPlaceholder);
   });
 
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    el.setAttribute('aria-label', t(el.dataset.i18nAria));
+  });
+
   // Update HTML lang attribute
   document.documentElement.lang = getLang();
 }
@@ -160,7 +164,7 @@ function setCurrentUser(user) {
 function registerUser(name, phone, password) {
   const data = getData();
   if (data.users.find(u => u.phone === phone)) {
-    return { success: false, message: 'Энэ утасны дугаар бүртгэлтэй байна.' };
+    return { success: false, message: t('phone_registered') };
   }
   const user = { id: 'user-' + Date.now(), name, phone, password };
   data.users.push(user);
@@ -173,7 +177,7 @@ function loginUser(phone, password) {
   const data = getData();
   const user = data.users.find(u => u.phone === phone && u.password === password);
   if (!user) {
-    return { success: false, message: 'Утас эсвэл нууц үг буруу байна.' };
+    return { success: false, message: t('invalid_credentials') };
   }
   setCurrentUser(user);
   return { success: true };
@@ -312,7 +316,7 @@ function openAuthModal(mode = 'login') {
       const name = form.name.value;
       const confirmPassword = form.confirmPassword.value;
       if (password !== confirmPassword) {
-        showToast('Нууц үг таарахгүй байна.', 'error');
+        showToast(t('password_mismatch'), 'error');
         return;
       }
       const result = registerUser(name, phone, password);
@@ -510,14 +514,14 @@ function renderHeader() {
         <div class="header-actions">
           <button class="lang-switch" onclick="toggleLanguage()" title="Switch language">${lang.toUpperCase()}</button>
           <div id="header-auth-action"></div>
-          <button class="mobile-menu-btn" aria-label="Цэс нээх">
+          <button class="mobile-menu-btn" data-i18n-aria="menu_open" aria-label="Цэс нээх">
             <span></span><span></span><span></span>
           </button>
         </div>
       </div>
     </header>
     <div class="mobile-menu">
-      <button class="mobile-menu-close" aria-label="Цэс хаах">✕</button>
+      <button class="mobile-menu-close" data-i18n-aria="menu_close" aria-label="Цэс хаах">✕</button>
       <a href="about.html" data-i18n="nav_about">Бидний тухай</a>
       <a href="rooms.html" data-i18n="nav_rooms">Байрлах өрөө</a>
       <a href="packages.html" data-i18n="nav_packages">Багц</a>
@@ -566,13 +570,13 @@ function renderFooter() {
             </ul>
           </div>
           <div>
-            <h4 class="footer-title">Үйлчилгээ</h4>
+            <h4 class="footer-title" data-i18n="services">Үйлчилгээ</h4>
             <ul class="footer-links">
-              <li><a href="events.html#corporate" data-i18n="nav_events">Байгууллагын арга хэмжээ</a></li>
-              <li><a href="events.html#wedding">Хурим</a></li>
-              <li><a href="events.html#family">Гэр бүлийн баяр</a></li>
+              <li><a href="events.html#corporate" data-i18n="corporate_events">Байгууллагын арга хэмжээ</a></li>
+              <li><a href="events.html#wedding" data-i18n="weddings">Хурим</a></li>
+              <li><a href="events.html#family" data-i18n="family_celebrations">Гэр бүлийн баяр</a></li>
               <li><a href="gallery.html" data-i18n="nav_gallery">Зургийн цомог</a></li>
-              <li><a href="location.html">Байршил</a></li>
+              <li><a href="location.html" data-i18n="location_title">Байршил</a></li>
             </ul>
           </div>
           <div>
@@ -585,8 +589,8 @@ function renderFooter() {
           </div>
         </div>
         <div class="footer-bottom">
-          <span>&copy; ${new Date().getFullYear()} ${escapeHtml(s.siteName)}. Бүх эрх хуулиар хамгаалагдсан.</span>
-          <span><a href="admin.html" style="color:var(--green-400)">Admin</a></span>
+          <span>&copy; ${new Date().getFullYear()} ${escapeHtml(s.siteName)}. ${t('rights_reserved')}.</span>
+          <span><a href="admin.html" style="color:var(--green-400)" data-i18n="admin">Admin</a></span>
         </div>
       </div>
     </footer>

@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Зургийн цомог</span>
-        <h1 class="page-header-title">Дүр төрх</h1>
-        <p class="page-header-desc">Байгаль, өрөө, хоол, event-ийн онцлох зургууд</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="gallery">Зургийн цомог</span>
+        <h1 class="page-header-title" data-i18n="gallery_page_title">Дүр төрх</h1>
+        <p class="page-header-desc" data-i18n="gallery_page_desc">Байгаль, өрөө, хоол, event-ийн онцлох зургууд</p>
       </div>
     </section>
 
@@ -49,21 +49,36 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const data = getData();
+      const lang = getLang();
       const tabs = document.getElementById('gallery-tabs');
       const grid = document.getElementById('gallery-grid');
-      const categories = [
-        { id: 'all', name: 'Бүгд' },
-        { id: 'resort', name: 'Амралтын газар' },
-        { id: 'nature', name: 'Байгаль' },
-        { id: 'rooms', name: 'Өрөө' },
-        { id: 'food', name: 'Хоол' },
-        { id: 'events', name: 'Event' },
-        { id: 'services', name: 'Үйлчилгээ' }
-      ];
+
+      const categories = {
+        mn: [
+          { id: 'all', name: 'Бүгд' },
+          { id: 'resort', name: 'Амралтын газар' },
+          { id: 'nature', name: 'Байгаль' },
+          { id: 'rooms', name: 'Өрөө' },
+          { id: 'food', name: 'Хоол' },
+          { id: 'events', name: 'Event' },
+          { id: 'services', name: 'Үйлчилгээ' }
+        ],
+        en: [
+          { id: 'all', name: 'All' },
+          { id: 'resort', name: 'Resort' },
+          { id: 'nature', name: 'Nature' },
+          { id: 'rooms', name: 'Rooms' },
+          { id: 'food', name: 'Food' },
+          { id: 'events', name: 'Events' },
+          { id: 'services', name: 'Services' }
+        ]
+      };
+
+      const catList = categories[lang] || categories.mn;
       let activeCategory = 'all';
 
       function renderTabs() {
-        tabs.innerHTML = categories.map(cat => `
+        tabs.innerHTML = catList.map(cat => `
           <button class="tab-btn ${cat.id === activeCategory ? 'active' : ''}" data-category="${cat.id}">${escapeHtml(cat.name)}</button>
         `).join('');
 

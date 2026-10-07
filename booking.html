@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Захиалга</span>
-        <h1 class="page-header-title">Захиалгын хүсэлт</h1>
-        <p class="page-header-desc">Мэдээллээ бөглөөд, бид тантай удахгүй холбогдоно</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="booking_request">Захиалга</span>
+        <h1 class="page-header-title" data-i18n="booking_page_title">Захиалгын хүсэлт</h1>
+        <p class="page-header-desc" data-i18n="booking_page_desc">Мэдээллээ бөглөөд, бид тантай удахгүй холбогдоно</p>
       </div>
     </section>
 
@@ -31,12 +31,12 @@
       <div class="container">
         <div class="grid grid-2" style="align-items:start;gap:3rem">
           <div>
-            <span class="section-label">Маягт</span>
-            <h2 class="section-title">Захиалгын мэдээлэл</h2>
-            <p>Та доорх маягтыг бөглөж, өрөө, багц эсвэл event-ийн захиалгын хүсэлт илгээнэ үү. Манай ажилтан 24 цагийн дотор тантай холбогдож, дэлгэрэнгүй мэдээлэл өгнө.</p>
+            <span class="section-label" data-i18n="booking_request">Маягт</span>
+            <h2 class="section-title" id="booking-form-title">Захиалгын мэдээлэл</h2>
+            <p id="booking-form-text">Та доорх маягтыг бөглөж, өрөө, багц эсвэл event-ийн захиалгын хүсэлт илгээнэ үү. Манай ажилтан 24 цагийн дотор тантай холбогдож, дэлгэрэнгүй мэдээлэл өгнө.</p>
             <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
-              <h3 style="margin-bottom:0.75rem;color:var(--green-800)">📞 Шууд холбогдох</h3>
-              <p class="mb-2">Яаралтай захиалга өгөх бол шууд утасдаж холбогдоорой.</p>
+              <h3 style="margin-bottom:0.75rem;color:var(--green-800)" id="call-title">📞 Шууд холбогдох</h3>
+              <p class="mb-2" id="call-text">Яаралтай захиалга өгөх бол шууд утасдаж холбогдоорой.</p>
               <a href="tel:+97699112233" id="booking-phone" class="btn btn-primary">+976 9911 2233</a>
             </div>
           </div>
@@ -45,31 +45,31 @@
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label" data-i18n="name">Нэр <span class="required">*</span></label>
-                  <input type="text" name="name" class="form-input" id="booking-name" required>
+                  <input type="text" name="name" class="form-input" id="booking-name" data-i18n-placeholder="your_name" placeholder="Таны нэр" required>
                 </div>
                 <div class="form-group">
                   <label class="form-label" data-i18n="phone">Утас <span class="required">*</span></label>
-                  <input type="tel" name="phone" class="form-input" id="booking-phone-input" required>
+                  <input type="tel" name="phone" class="form-input" id="booking-phone-input" data-i18n-placeholder="phone" placeholder="Утас" required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Ирэх өдөр <span class="required">*</span></label>
+                  <label class="form-label" data-i18n="arrival_date">Ирэх өдөр <span class="required">*</span></label>
                   <input type="date" name="arrivalDate" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Гарах өдөр / Хугацаа</label>
+                  <label class="form-label" data-i18n="departure_date">Гарах өдөр / Хугацаа</label>
                   <input type="date" name="departureDate" class="form-input">
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Хүний тоо <span class="required">*</span></label>
-                  <input type="number" name="people" class="form-input" min="1" required>
+                  <label class="form-label" data-i18n="people">Хүний тоо <span class="required">*</span></label>
+                  <input type="number" name="people" class="form-input" min="1" data-i18n-placeholder="people" placeholder="Хүний тоо" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Үйлчилгээний төрөл <span class="required">*</span></label>
-                  <select name="serviceType" class="form-select" required>
+                  <label class="form-label" data-i18n="select_service">Үйлчилгээний төрөл <span class="required">*</span></label>
+                  <select name="serviceType" class="form-select" required id="service-type-select">
                     <option value="">Сонгох</option>
                     <option value="room">Өрөө захиалах</option>
                     <option value="package">Багц захиалах</option>
@@ -81,22 +81,22 @@
                 </div>
               </div>
               <div class="form-group room-select-group hidden">
-                <label class="form-label">Өрөө сонгох</label>
+                <label class="form-label" data-i18n="select_room">Өрөө сонгох</label>
                 <select name="room" class="form-select" id="room-select">
                   <option value="">Сонгох</option>
                 </select>
               </div>
               <div class="form-group package-select-group hidden">
-                <label class="form-label">Багц сонгох</label>
+                <label class="form-label" data-i18n="select_package">Багц сонгох</label>
                 <select name="package" class="form-select" id="package-select">
                   <option value="">Сонгох</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Нэмэлт хүсэлт</label>
-                <textarea name="notes" class="form-textarea" placeholder="Тусгай хүсэлт, хоолны хязгаарлалт, тэмдэглэх зүйлс..."></textarea>
+                <label class="form-label" data-i18n="notes">Нэмэлт хүсэлт</label>
+                <textarea name="notes" class="form-textarea" data-i18n-placeholder="notes" placeholder="Тусгай хүсэлт, хоолны хязгаарлалт, тэмдэглэх зүйлс..."></textarea>
               </div>
-              <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Захиалгын хүсэлт илгээх</button>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%" id="booking-submit">Захиалгын хүсэлт илгээх</button>
             </form>
           </div>
         </div>
@@ -115,6 +115,58 @@
       const data = getData();
       const s = data.settings;
       const user = getCurrentUser();
+      const lang = getLang();
+
+      const texts = {
+        mn: {
+          formTitle: 'Захиалгын мэдээлэл',
+          formText: 'Та доорх маягтыг бөглөж, өрөө, багц эсвэл event-ийн захиалгын хүсэлт илгээнэ үү. Манай ажилтан 24 цагийн дотор тантай холбогдож, дэлгэрэнгүй мэдээлэл өгнө.',
+          callTitle: '📞 Шууд холбогдох',
+          callText: 'Яаралтай захиалга өгөх бол шууд утасдаж холбогдоорой.',
+          select: 'Сонгох',
+          roomOption: 'Өрөө захиалах',
+          packageOption: 'Багц захиалах',
+          corporateOption: 'Байгууллагын event',
+          weddingOption: 'Хурим',
+          familyOption: 'Гэр бүлийн баяр',
+          otherOption: 'Бусад',
+          submit: 'Захиалгын хүсэлт илгээх',
+          notesPlaceholder: 'Тусгай хүсэлт, хоолны хязгаарлалт, тэмдэглэх зүйлс...'
+        },
+        en: {
+          formTitle: 'Booking Information',
+          formText: 'Fill out the form below to request a room, package, or event booking. Our staff will contact you within 24 hours with details.',
+          callTitle: '📞 Contact us directly',
+          callText: 'For urgent bookings, please call us directly.',
+          select: 'Select',
+          roomOption: 'Book a room',
+          packageOption: 'Book a package',
+          corporateOption: 'Corporate event',
+          weddingOption: 'Wedding',
+          familyOption: 'Family celebration',
+          otherOption: 'Other',
+          submit: 'Send booking request',
+          notesPlaceholder: 'Special requests, dietary restrictions, notes...'
+        }
+      };
+      const t2 = texts[lang] || texts.mn;
+
+      document.getElementById('booking-form-title').textContent = t2.formTitle;
+      document.getElementById('booking-form-text').textContent = t2.formText;
+      document.getElementById('call-title').textContent = t2.callTitle;
+      document.getElementById('call-text').textContent = t2.callText;
+      document.getElementById('booking-submit').textContent = t2.submit;
+
+      const serviceSelect = document.getElementById('service-type-select');
+      serviceSelect.innerHTML = `
+        <option value="">${t2.select}</option>
+        <option value="room">${t2.roomOption}</option>
+        <option value="package">${t2.packageOption}</option>
+        <option value="corporate">${t2.corporateOption}</option>
+        <option value="wedding">${t2.weddingOption}</option>
+        <option value="family">${t2.familyOption}</option>
+        <option value="other">${t2.otherOption}</option>
+      `;
 
       document.getElementById('booking-phone').textContent = s.phone;
       document.getElementById('booking-phone').href = 'tel:' + s.phone.replace(/\s/g, '');
@@ -125,12 +177,12 @@
       }
 
       const roomSelect = document.getElementById('room-select');
-      roomSelect.innerHTML = '<option value="">Сонгох</option>' + data.rooms.map(r =>
+      roomSelect.innerHTML = `<option value="">${t2.select}</option>` + data.rooms.map(r =>
         `<option value="${r.id}">${escapeHtml(r.name)} — ${formatPrice(r.price)}/${r.priceUnit}</option>`
       ).join('');
 
       const packageSelect = document.getElementById('package-select');
-      packageSelect.innerHTML = '<option value="">Сонгох</option>' + data.packages.map(p =>
+      packageSelect.innerHTML = `<option value="">${t2.select}</option>` + data.packages.map(p =>
         `<option value="${p.id}">${escapeHtml(p.name)} — ${formatPrice(p.price)}/${p.priceUnit}</option>`
       ).join('');
 
@@ -139,7 +191,6 @@
       const roomId = params.get('room');
       const pkgId = params.get('package');
       const service = params.get('service');
-      const serviceSelect = document.querySelector('[name="serviceType"]');
 
       if (roomId) {
         serviceSelect.value = 'room';
@@ -154,6 +205,7 @@
 
       // Trigger change to show/hide fields
       serviceSelect.dispatchEvent(new Event('change'));
+      applyTranslations();
     });
   </script>
 </body>

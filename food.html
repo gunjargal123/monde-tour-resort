@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Хоол & Ундаа</span>
-        <h1 class="page-header-title">Хоолны үйлчилгээ</h1>
-        <p class="page-header-desc">Уламжлалт монгол хоол, шинэхэн орчин үеийн цэс</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="nav_food">Хоол & Ундаа</span>
+        <h1 class="page-header-title" data-i18n="food_page_title">Хоолны үйлчилгээ</h1>
+        <p class="page-header-desc" data-i18n="food_page_desc">Уламжлалт монгол хоол, шинэхэн орчин үеийн цэс</p>
       </div>
     </section>
 
@@ -31,10 +31,10 @@
       <div class="container">
         <div class="grid grid-2" style="align-items:center;margin-bottom:4rem">
           <div>
-            <span class="section-label">Ресторан</span>
-            <h2 class="section-title">Байгаль дундах амтат хоол</h2>
-            <p>Monde Tour-ийн хоолны үйлчилгээ нь уламжлалт монгол хоолны гүн утга, орчин үеийн амтыг хослуулдаг. Бид өдөр бүр шинэхэн орцоор, гэрийн нөхцөлд бэлтгэсэн хоолыг зочдодоо өргөн барьдаг.</p>
-            <p>Хорхог, бууз, цуйван зэрэг уламжлалт хоолноос эхлээд хосуудын романтик оройн хоол, байгууллагын багийн хүлээн авалтын хоол хүртэл бүх төрлийн захиалгыг хүлээн авна.</p>
+            <span class="section-label" id="restaurant-label">Ресторан</span>
+            <h2 class="section-title" id="food-title">Байгаль дундах амтат хоол</h2>
+            <p id="food-text1">Monde Tour-ийн хоолны үйлчилгээ нь уламжлалт монгол хоолны гүн утга, орчин үеийн амтыг хослуулдаг. Бид өдөр бүр шинэхэн орцоор, гэрийн нөхцөлд бэлтгэсэн хоолыг зочдодоо өргөн барьдаг.</p>
+            <p id="food-text2">Хорхог, бууз, цуйван зэрэг уламжлалт хоолноос эхлээд хосуудын романтик оройн хоол, байгууллагын багийн хүлээн авалтын хоол хүртэл бүх төрлийн захиалгыг хүлээн авна.</p>
           </div>
           <div>
             <img src="images/camp-overview.jpg" alt="Monde Tour хоолны газар" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl)">
@@ -42,8 +42,8 @@
         </div>
 
         <div class="section-header">
-          <span class="section-label">Цэс</span>
-          <h2 class="section-title">Меню</h2>
+          <span class="section-label" data-i18n="menu">Цэс</span>
+          <h2 class="section-title" data-i18n="menu">Меню</h2>
         </div>
 
         <div class="tabs" id="menu-tabs"></div>
@@ -60,13 +60,26 @@
   <script>
     function renderMenu() {
       const data = getData();
+      const lang = getLang();
       const tabs = document.getElementById('menu-tabs');
       const grid = document.getElementById('menu-grid');
       let activeCategory = data.menu.categories[0].id;
 
+      const catNames = {
+        all: { mn: 'Бүгд', en: 'All' },
+        mongolian: { mn: 'Монгол хоол', en: 'Mongolian' },
+        bbq: { mn: 'BBQ', en: 'BBQ' },
+        beverage: { mn: 'Уух зүйлс', en: 'Beverages' },
+        dessert: { mn: 'Амттан', en: 'Desserts' }
+      };
+
+      function categoryName(cat) {
+        return (catNames[cat.id] && catNames[cat.id][lang]) || cat.name;
+      }
+
       function renderTabs() {
         tabs.innerHTML = data.menu.categories.map(cat => `
-          <button class="tab-btn ${cat.id === activeCategory ? 'active' : ''}" data-category="${cat.id}">${escapeHtml(cat.name)}</button>
+          <button class="tab-btn ${cat.id === activeCategory ? 'active' : ''}" data-category="${cat.id}">${escapeHtml(categoryName(cat))}</button>
         `).join('');
 
         tabs.querySelectorAll('.tab-btn').forEach(btn => {
@@ -98,6 +111,27 @@
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
+      const lang = getLang();
+      const intro = {
+        mn: {
+          restaurant: 'Ресторан',
+          title: 'Байгаль дундах амтат хоол',
+          text1: 'Monde Tour-ийн хоолны үйлчилгээ нь уламжлалт монгол хоолны гүн утга, орчин үеийн амтыг хослуулдаг. Бид өдөр бүр шинэхэн орцоор, гэрийн нөхцөлд бэлтгэсэн хоолыг зочдодоо өргөн барьдаг.',
+          text2: 'Хорхог, бууз, цуйван зэрэг уламжлалт хоолноос эхлээд хосуудын романтик оройн хоол, байгууллагын багийн хүлээн авалтын хоол хүртэл бүх төрлийн захиалгыг хүлээн авна.'
+        },
+        en: {
+          restaurant: 'Restaurant',
+          title: 'Delicious Food in Nature',
+          text1: 'Monde Tour dining blends the deep traditions of Mongolian cuisine with modern tastes. We serve guests fresh, home-style meals prepared daily.',
+          text2: 'From traditional khorkhog, buuz, and tsuivan to romantic dinners for couples and corporate team receptions, we accept all kinds of orders.'
+        }
+      };
+      const t = intro[lang] || intro.mn;
+      document.getElementById('restaurant-label').textContent = t.restaurant;
+      document.getElementById('food-title').textContent = t.title;
+      document.getElementById('food-text1').textContent = t.text1;
+      document.getElementById('food-text2').textContent = t.text2;
+
       renderMenu();
       const result = await loadErxesData();
       if (result.success && result.foodCount) {

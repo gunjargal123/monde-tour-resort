@@ -23,7 +23,7 @@
       <div class="container page-header-content">
         <span class="section-label" style="color:var(--green-300)" data-i18n="nav_my_bookings">Миний захиалгууд</span>
         <h1 class="page-header-title" data-i18n="my_bookings_title">Миний захиалгууд</h1>
-        <p class="page-header-desc">Таны өмнө хийсэн захиалгын хүсэлтүүд</p>
+        <p class="page-header-desc" data-i18n="my_bookings_page_desc">Таны өмнө хийсэн захиалгын хүсэлтүүд</p>
       </div>
     </section>
 
@@ -42,6 +42,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const user = getCurrentUser();
       const container = document.getElementById('bookings-content');
+      const lang = getLang();
 
       if (!user) {
         container.innerHTML = `
@@ -70,6 +71,10 @@
         return;
       }
 
+      const dateLabel = lang === 'en' ? 'Arrival' : 'Ирэх';
+      const departureLabel = lang === 'en' ? 'Departure' : 'Гарах';
+      const peopleLabel = lang === 'en' ? 'people' : 'хүн';
+
       container.innerHTML = `
         <h2 class="section-title" data-i18n="my_bookings_title">Миний захиалгууд</h2>
         <div class="grid grid-1" style="gap:1rem">
@@ -77,12 +82,12 @@
             <div class="card" style="padding:1.5rem">
               <div class="flex justify-between items-start" style="flex-wrap:wrap;gap:1rem">
                 <div>
-                  <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-500)">${new Date(b.createdAt).toLocaleDateString('mn-MN')}</p>
-                  <h3 class="card-title" style="margin-bottom:0.25rem">${serviceLabel(b.serviceType)}</h3>
-                  <p class="card-text mb-0">${escapeHtml(b.name)} · ${escapeHtml(b.phone)} · ${b.people} хүн</p>
-                  ${b.arrivalDate ? `<p class="card-text mb-0">Ирэх: ${b.arrivalDate}${b.departureDate ? ' — Гарах: ' + b.departureDate : ''}</p>` : ''}
+                  <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-500)">${new Date(b.createdAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'mn-MN')}</p>
+                  <h3 class="card-title" style="margin-bottom:0.25rem">${serviceLabel(b.serviceType, lang)}</h3>
+                  <p class="card-text mb-0">${escapeHtml(b.name)} · ${escapeHtml(b.phone)} · ${b.people} ${peopleLabel}</p>
+                  ${b.arrivalDate ? `<p class="card-text mb-0">${dateLabel}: ${b.arrivalDate}${b.departureDate ? ' — ' + departureLabel + ': ' + b.departureDate : ''}</p>` : ''}
                 </div>
-                <span class="status-badge status-${b.status}">${statusLabel(b.status)}</span>
+                <span class="status-badge status-${b.status}">${statusLabel(b.status, lang)}</span>
               </div>
             </div>
           `).join('')}
@@ -91,17 +96,20 @@
       applyTranslations();
     });
 
-    function serviceLabel(type) {
+    function serviceLabel(type, lang) {
       const labels = {
-        room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event',
-        wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад'
+        mn: { room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event', wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад' },
+        en: { room: 'Room', package: 'Package', corporate: 'Corporate event', wedding: 'Wedding', family: 'Family celebration', other: 'Other' }
       };
-      return labels[type] || type;
+      return labels[lang][type] || labels.mn[type] || type;
     }
 
-    function statusLabel(status) {
-      const labels = { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' };
-      return labels[status] || status;
+    function statusLabel(status, lang) {
+      const labels = {
+        mn: { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' },
+        en: { new: 'New', contacted: 'Contacted', confirmed: 'Confirmed', cancelled: 'Cancelled' }
+      };
+      return labels[lang][status] || labels.mn[status] || status;
     }
   </script>
 </body>

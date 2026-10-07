@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Холбогдох</span>
-        <h1 class="page-header-title">Холбоо барих</h1>
-        <p class="page-header-desc">Бидэнтэй холбогдоорой — захиалга, үнийн санал, асуулт хүлээн авна</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="nav_contact">Холбогдох</span>
+        <h1 class="page-header-title" data-i18n="contact_page_title">Холбоо барих</h1>
+        <p class="page-header-desc" data-i18n="contact_page_desc">Бидэнтэй холбогдоорой — захиалга, үнийн санал, асуулт хүлээн авна</p>
       </div>
     </section>
 
@@ -31,53 +31,53 @@
       <div class="container">
         <div class="grid grid-3" style="margin-bottom:3rem">
           <div class="service-card" style="text-align:left">
-            <h3>📞 Утас</h3>
-            <p class="mb-2">Шууд залгаж захиалга өгнө үү.</p>
+            <h3>📞 <span data-i18n="phone">Утас</span></h3>
+            <p class="mb-2" id="phone-help">Шууд залгаж захиалга өгнө үү.</p>
             <a href="tel:+97699112233" id="contact-phone" class="btn btn-outline btn-sm">+976 9911 2233</a>
           </div>
           <div class="service-card" style="text-align:left">
-            <h3>✉️ Имэйл</h3>
-            <p class="mb-2">Асуулт, санал, захиалга илгээнэ үү.</p>
+            <h3>✉️ <span data-i18n="email">Имэйл</span></h3>
+            <p class="mb-2" id="email-help">Асуулт, санал, захиалга илгээнэ үү.</p>
             <a href="mailto:info@mondetour.mn" id="contact-email" class="btn btn-outline btn-sm">info@mondetour.mn</a>
           </div>
           <div class="service-card" style="text-align:left">
-            <h3>🕒 Ажлын цаг</h3>
+            <h3>🕒 <span data-i18n="opening_hours">Ажлын цаг</span></h3>
             <p class="mb-0" id="contact-hours">24 цагаар (24/7)</p>
-            <p class="mb-0" style="font-size:0.875rem">Өдөр бүр нээлттэй</p>
+            <p class="mb-0" style="font-size:0.875rem" id="open-daily">Өдөр бүр нээлттэй</p>
           </div>
         </div>
 
         <div class="grid grid-2" style="align-items:start;gap:3rem">
           <div>
-            <span class="section-label">Мессеж</span>
-            <h2 class="section-title">Бидэнд мессэж илгээх</h2>
+            <span class="section-label" data-i18n="your_request">Мессеж</span>
+            <h2 class="section-title" data-i18n="send_message">Бидэнд мессэж илгээх</h2>
             <form class="booking-form" id="contact-form">
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Нэр <span class="required">*</span></label>
-                  <input type="text" name="name" class="form-input" required>
+                  <label class="form-label" data-i18n="your_name">Нэр <span class="required">*</span></label>
+                  <input type="text" name="name" class="form-input" data-i18n-placeholder="your_name" placeholder="Таны нэр" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Утас <span class="required">*</span></label>
-                  <input type="tel" name="phone" class="form-input" required>
+                  <label class="form-label" data-i18n="phone">Утас <span class="required">*</span></label>
+                  <input type="tel" name="phone" class="form-input" data-i18n-placeholder="phone" placeholder="Утас" required>
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Имэйл</label>
-                <input type="email" name="email" class="form-input">
+                <label class="form-label" data-i18n="email">Имэйл</label>
+                <input type="email" name="email" class="form-input" data-i18n-placeholder="your_email" placeholder="Имэйл хаяг">
               </div>
               <div class="form-group">
-                <label class="form-label">Мессэж <span class="required">*</span></label>
-                <textarea name="message" class="form-textarea" required></textarea>
+                <label class="form-label" data-i18n="your_message">Мессэж <span class="required">*</span></label>
+                <textarea name="message" class="form-textarea" data-i18n-placeholder="your_message" placeholder="Мессеж" required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Илгээх</button>
+              <button type="submit" class="btn btn-primary" data-i18n="submit">Илгээх</button>
             </form>
           </div>
           <div>
-            <span class="section-label">Байршил</span>
-            <h2 class="section-title">Хаяг</h2>
+            <span class="section-label" data-i18n="location_title">Байршил</span>
+            <h2 class="section-title" data-i18n="address">Хаяг</h2>
             <div class="card" style="padding:1.5rem;margin-bottom:1.5rem">
-              <p style="margin-bottom:0.75rem"><strong>Хаяг:</strong> <span id="contact-address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
+              <p style="margin-bottom:0.75rem"><strong data-i18n="address">Хаяг</strong>: <span id="contact-address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
               <p style="margin-bottom:0.75rem"><strong>Facebook:</strong> <a href="https://facebook.com/mondetour" target="_blank" rel="noopener" id="contact-fb">facebook.com/mondetour</a></p>
               <p class="mb-0"><strong>Instagram:</strong> <a href="https://instagram.com/mondetour" target="_blank" rel="noopener" id="contact-ig">@mondetour</a></p>
             </div>
@@ -98,6 +98,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const data = getData();
       const s = data.settings;
+      const lang = getLang();
 
       const phoneEl = document.getElementById('contact-phone');
       phoneEl.textContent = s.phone;
@@ -112,9 +113,18 @@
       document.getElementById('contact-fb').href = s.facebook;
       document.getElementById('contact-ig').href = s.instagram;
 
+      const help = {
+        mn: { phone: 'Шууд залгаж захиалга өгнө үү.', email: 'Асуулт, санал, захиалга илгээнэ үү.', daily: 'Өдөр бүр нээлттэй' },
+        en: { phone: 'Call us directly to book.', email: 'Send questions, feedback, or bookings.', daily: 'Open daily' }
+      };
+      const h = help[lang] || help.mn;
+      document.getElementById('phone-help').textContent = h.phone;
+      document.getElementById('email-help').textContent = h.email;
+      document.getElementById('open-daily').textContent = h.daily;
+
       document.getElementById('contact-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        showToast('Мессэжийг хүлээн авлаа. Тантай удахгүй холбогдоно.');
+        showToast(t('message_sent'));
         e.target.reset();
       });
     });

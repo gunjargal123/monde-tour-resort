@@ -3,6 +3,11 @@
 const ADMIN_PASSWORD = 'admin123';
 let currentData = null;
 
+function ta(key) {
+  if (typeof t === 'function') return t(key);
+  return key;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initAdminAuth();
 });
@@ -26,7 +31,7 @@ function initAdminAuth() {
       sessionStorage.setItem('mondeTourAdmin', 'true');
       showAdminApp();
     } else {
-      showToast('Нууц үг буруу байна.', 'error');
+      showToast(t('invalid_credentials'), 'error');
     }
   });
 
@@ -50,6 +55,7 @@ function showAdminApp() {
   renderMenuTable();
   renderEventsTable();
   renderGalleryTable();
+  applyTranslations();
 }
 
 function initAdminNav() {
@@ -69,26 +75,29 @@ function switchSection(section) {
   document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
   document.getElementById('section-' + section).classList.add('active');
 
-  const titles = {
-    dashboard: 'Хяналтын самбар',
-    bookings: 'Захиалгууд',
-    rooms: 'Өрөө',
-    packages: 'Багц',
-    menu: 'Меню',
-    events: 'Event',
-    gallery: 'Зургийн цомог',
-    settings: 'Тохиргоо'
+  const keys = {
+    dashboard: 'admin_dashboard',
+    bookings: 'admin_bookings',
+    rooms: 'admin_rooms',
+    packages: 'admin_packages',
+    menu: 'admin_menu',
+    events: 'admin_events',
+    gallery: 'admin_gallery',
+    settings: 'admin_settings'
   };
-  document.getElementById('admin-section-title').textContent = titles[section];
+  document.getElementById('admin-section-title').textContent = t(keys[section]);
 }
 
 function initResetData() {
   document.getElementById('reset-data-btn').addEventListener('click', () => {
-    if (confirm('Бүх өгөгдлийг анхны байдалд авах уу? Энэ үйлдлийг буцаах боломжгүй.')) {
+    const msg = getLang() === 'en'
+      ? 'Reset all data to default? This cannot be undone.'
+      : 'Бүх өгөгдлийг анхны байдалд авах уу? Энэ үйлдлийг буцаах боломжгүй.';
+    if (confirm(msg)) {
       resetData();
       currentData = getData();
       renderAll();
-      showToast('Өгөгдөл анхны байдалд орлоо.');
+      showToast(getLang() === 'en' ? 'Data reset to default.' : 'Өгөгдөл анхны байдалд орлоо.');
     }
   });
 }
@@ -115,7 +124,7 @@ function renderDashboard() {
   const recent = data.bookings.slice(0, 5);
   const container = document.getElementById('dash-recent-bookings');
   if (recent.length === 0) {
-    container.innerHTML = '<p class="text-muted">Одоогоор захиалга байхгүй.</p>';
+    container.innerHTML = `<p class="text-muted">${ta('admin_no_bookings')}</p>`;
     return;
   }
 
@@ -138,7 +147,7 @@ function renderBookings() {
   const bookings = currentData.bookings;
 
   if (bookings.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Одоогоор захиалга байхгүй.</td></tr>';
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center">${ta('admin_no_bookings')}</td></tr>`;
     return;
   }
 
@@ -169,38 +178,45 @@ function updateBookingStatus(id, status) {
     booking.status = status;
     saveData(currentData);
     renderDashboard();
-    showToast('Төлөв шинэчлэгдлээ.');
+    showToast(ta('admin_status_updated'));
   }
 }
 
 function serviceLabel(type) {
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
   const labels = {
-    room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event',
-    wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад'
+    mn: { room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event', wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад' },
+    en: { room: 'Room', package: 'Package', corporate: 'Corporate event', wedding: 'Wedding', family: 'Family celebration', other: 'Other' }
   };
-  return labels[type] || type;
+  return labels[lang][type] || type;
 }
 
 function statusBadge(status) {
-  const labels = { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' };
-  return `<span class="status-badge status-${status}">${labels[status]}</span>`;
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
+  const labels = {
+    mn: { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' },
+    en: { new: 'New', contacted: 'Contacted', confirmed: 'Confirmed', cancelled: 'Cancelled' }
+  };
+  return `<span class="status-badge status-${status}">${labels[lang][status]}</span>`;
 }
 
 // ─── Rooms ───
 function renderRoomsTable() {
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
+  const peopleUnit = lang === 'en' ? 'people' : 'хүн';
   const container = document.getElementById('rooms-table');
   container.innerHTML = `<table class="admin-table">
-    <thead><tr><th>Нэр</th><th>Багтаамж</th><th>Ор</th><th>Үнэ</th><th>Онцлох</th><th></th></tr></thead>
+    <thead><tr><th>${ta('name')}</th><th>${ta('capacity')}</th><th>${ta('beds')}</th><th>${ta('price_per_night')}</th><th>${ta('featured')}</th><th></th></tr></thead>
     <tbody>${currentData.rooms.map(r => `
       <tr>
         <td>${escapeHtml(r.name)}</td>
-        <td>${r.capacity} хүн</td>
+        <td>${r.capacity} ${peopleUnit}</td>
         <td>${escapeHtml(r.beds)}</td>
         <td>${formatPrice(r.price)}</td>
         <td>${r.featured ? '✓' : ''}</td>
         <td class="admin-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editRoom('${r.id}')">Засах</button>
-          <button class="btn btn-secondary btn-sm" onclick="deleteRoom('${r.id}')" style="color:#991b1b;border-color:#fecaca">Устгах</button>
+          <button class="btn btn-secondary btn-sm" onclick="editRoom('${r.id}')">${ta('edit')}</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteRoom('${r.id}')" style="color:#991b1b;border-color:#fecaca">${ta('admin_delete')}</button>
         </td>
       </tr>
     `).join('')}</tbody>
@@ -214,7 +230,7 @@ function openRoomModal(roomId = null) {
   const modalHtml = `
     <div id="room-modal" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem">
       <div class="booking-form" style="width:100%;max-width:560px;max-height:90vh;overflow-y:auto">
-        <h3 style="margin-bottom:1.25rem">${isEdit ? 'Өрөө засах' : 'Шинэ өрөө нэмэх'}</h3>
+        <h3 style="margin-bottom:1.25rem">${isEdit ? ta('admin_edit_room') : ta('admin_add_room_title')}</h3>
         <form id="room-form" class="admin-form">
           <input type="hidden" name="id" value="${room.id || ''}">
           <div class="form-group">
@@ -253,12 +269,12 @@ function openRoomModal(roomId = null) {
           </div>
           <div class="form-group">
             <label class="form-label" style="display:flex;align-items:center;gap:0.5rem">
-              <input type="checkbox" name="featured" ${room.featured ? 'checked' : ''}> Онцлох
+              <input type="checkbox" name="featured" ${room.featured ? 'checked' : ''}> ${ta('featured')}
             </label>
           </div>
           <div class="flex gap-3" style="justify-content:flex-end">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('room-modal')">Болих</button>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('room-modal')">${ta('cancel')}</button>
+            <button type="submit" class="btn btn-primary">${ta('save')}</button>
           </div>
         </form>
       </div>
@@ -269,12 +285,13 @@ function openRoomModal(roomId = null) {
   document.getElementById('room-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
+    const lang = typeof getLang === 'function' ? getLang() : 'mn';
     const newRoom = {
       id: form.id.value || 'room-' + Date.now(),
       name: form.name.value,
       capacity: parseInt(form.capacity.value),
       price: parseInt(form.price.value),
-      priceUnit: 'өдөр',
+      priceUnit: lang === 'en' ? 'night' : 'өдөр',
       beds: form.beds.value,
       shortDesc: form.shortDesc.value,
       description: form.description.value,
@@ -293,7 +310,7 @@ function openRoomModal(roomId = null) {
     closeModal('room-modal');
     renderRoomsTable();
     renderDashboard();
-    showToast('Өрөө хадгалагдлаа.');
+    showToast(ta('admin_room_saved'));
   });
 }
 
@@ -302,12 +319,12 @@ function editRoom(id) {
 }
 
 function deleteRoom(id) {
-  if (confirm('Энэ өрөөг устгах уу?')) {
+  if (confirm(ta('admin_delete_room_confirm'))) {
     currentData.rooms = currentData.rooms.filter(r => r.id !== id);
     saveData(currentData);
     renderRoomsTable();
     renderDashboard();
-    showToast('Өрөө устгагдлаа.');
+    showToast(ta('admin_room_deleted'));
   }
 }
 
@@ -315,7 +332,7 @@ function deleteRoom(id) {
 function renderPackagesTable() {
   const container = document.getElementById('packages-table');
   container.innerHTML = `<table class="admin-table">
-    <thead><tr><th>Нэр</th><th>Хүн</th><th>Хугацаа</th><th>Үнэ</th><th>Төрөл</th><th></th></tr></thead>
+    <thead><tr><th>${ta('name')}</th><th>${ta('people')}</th><th>${ta('duration')}</th><th>${ta('price_per_night')}</th><th>${ta('type')}</th><th></th></tr></thead>
     <tbody>${currentData.packages.map(p => `
       <tr>
         <td>${escapeHtml(p.name)}</td>
@@ -324,8 +341,8 @@ function renderPackagesTable() {
         <td>${formatPrice(p.price)}</td>
         <td>${escapeHtml(p.type)}</td>
         <td class="admin-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editPackage('${p.id}')">Засах</button>
-          <button class="btn btn-secondary btn-sm" onclick="deletePackage('${p.id}')" style="color:#991b1b;border-color:#fecaca">Устгах</button>
+          <button class="btn btn-secondary btn-sm" onclick="editPackage('${p.id}')">${ta('edit')}</button>
+          <button class="btn btn-secondary btn-sm" onclick="deletePackage('${p.id}')" style="color:#991b1b;border-color:#fecaca">${ta('admin_delete')}</button>
         </td>
       </tr>
     `).join('')}</tbody>
@@ -335,11 +352,12 @@ function renderPackagesTable() {
 function openPackageModal(packageId = null) {
   const pkg = packageId ? currentData.packages.find(p => p.id === packageId) : {};
   const isEdit = !!packageId;
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
 
   const modalHtml = `
     <div id="package-modal" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem">
       <div class="booking-form" style="width:100%;max-width:560px;max-height:90vh;overflow-y:auto">
-        <h3 style="margin-bottom:1.25rem">${isEdit ? 'Багц засах' : 'Шинэ багц нэмэх'}</h3>
+        <h3 style="margin-bottom:1.25rem">${isEdit ? ta('admin_edit_package') : ta('admin_add_package_title')}</h3>
         <form id="package-form" class="admin-form">
           <input type="hidden" name="id" value="${pkg.id || ''}">
           <div class="form-group">
@@ -369,9 +387,9 @@ function openPackageModal(packageId = null) {
           <div class="form-group">
             <label class="form-label">Төрөл</label>
             <select name="type" class="form-select">
-              <option value="family" ${pkg.type === 'family' ? 'selected' : ''}>Гэр бүлийн</option>
-              <option value="couple" ${pkg.type === 'couple' ? 'selected' : ''}>Хосуудын</option>
-              <option value="corporate" ${pkg.type === 'corporate' ? 'selected' : ''}>Байгууллагын</option>
+              <option value="family" ${pkg.type === 'family' ? 'selected' : ''}>${lang === 'en' ? 'Family' : 'Гэр бүлийн'}</option>
+              <option value="couple" ${pkg.type === 'couple' ? 'selected' : ''}>${lang === 'en' ? 'Couple' : 'Хосуудын'}</option>
+              <option value="corporate" ${pkg.type === 'corporate' ? 'selected' : ''}>${lang === 'en' ? 'Corporate' : 'Байгууллагын'}</option>
               <option value="event" ${pkg.type === 'event' ? 'selected' : ''}>Event</option>
             </select>
           </div>
@@ -393,12 +411,12 @@ function openPackageModal(packageId = null) {
           </div>
           <div class="form-group">
             <label class="form-label" style="display:flex;align-items:center;gap:0.5rem">
-              <input type="checkbox" name="featured" ${pkg.featured ? 'checked' : ''}> Онцлох
+              <input type="checkbox" name="featured" ${pkg.featured ? 'checked' : ''}> ${ta('featured')}
             </label>
           </div>
           <div class="flex gap-3" style="justify-content:flex-end">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('package-modal')">Болих</button>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('package-modal')">${ta('cancel')}</button>
+            <button type="submit" class="btn btn-primary">${ta('save')}</button>
           </div>
         </form>
       </div>
@@ -434,7 +452,7 @@ function openPackageModal(packageId = null) {
     closeModal('package-modal');
     renderPackagesTable();
     renderDashboard();
-    showToast('Багц хадгалагдлаа.');
+    showToast(ta('admin_package_saved'));
   });
 }
 
@@ -443,12 +461,12 @@ function editPackage(id) {
 }
 
 function deletePackage(id) {
-  if (confirm('Энэ багцыг устгах уу?')) {
+  if (confirm(ta('admin_delete_package_confirm'))) {
     currentData.packages = currentData.packages.filter(p => p.id !== id);
     saveData(currentData);
     renderPackagesTable();
     renderDashboard();
-    showToast('Багц устгагдлаа.');
+    showToast(ta('admin_package_deleted'));
   }
 }
 
@@ -456,7 +474,7 @@ function deletePackage(id) {
 function renderMenuTable() {
   const container = document.getElementById('menu-table');
   container.innerHTML = `<table class="admin-table">
-    <thead><tr><th>Нэр</th><th>Ангилал</th><th>Тайлбар</th><th>Үнэ</th><th></th></tr></thead>
+    <thead><tr><th>${ta('name')}</th><th>${ta('category')}</th><th>${ta('description')}</th><th>${ta('price_per_night')}</th><th></th></tr></thead>
     <tbody>${currentData.menu.items.map(item => `
       <tr>
         <td>${escapeHtml(item.name)}</td>
@@ -464,8 +482,8 @@ function renderMenuTable() {
         <td>${escapeHtml(item.description)}</td>
         <td>${formatPrice(item.price)}</td>
         <td class="admin-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editMenuItem('${item.id}')">Засах</button>
-          <button class="btn btn-secondary btn-sm" onclick="deleteMenuItem('${item.id}')" style="color:#991b1b;border-color:#fecaca">Устгах</button>
+          <button class="btn btn-secondary btn-sm" onclick="editMenuItem('${item.id}')">${ta('edit')}</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteMenuItem('${item.id}')" style="color:#991b1b;border-color:#fecaca">${ta('admin_delete')}</button>
         </td>
       </tr>
     `).join('')}</tbody>
@@ -484,7 +502,7 @@ function openMenuModal(itemId = null) {
   const modalHtml = `
     <div id="menu-modal" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem">
       <div class="booking-form" style="width:100%;max-width:480px">
-        <h3 style="margin-bottom:1.25rem">${isEdit ? 'Хоол засах' : 'Шинэ хоол нэмэх'}</h3>
+        <h3 style="margin-bottom:1.25rem">${isEdit ? ta('admin_edit_menu') : ta('admin_add_menu_title')}</h3>
         <form id="menu-form" class="admin-form">
           <input type="hidden" name="id" value="${item.id || ''}">
           <div class="form-group">
@@ -506,8 +524,8 @@ function openMenuModal(itemId = null) {
             <input type="number" name="price" class="form-input" value="${item.price || ''}" required>
           </div>
           <div class="flex gap-3" style="justify-content:flex-end">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('menu-modal')">Болих</button>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('menu-modal')">${ta('cancel')}</button>
+            <button type="submit" class="btn btn-primary">${ta('save')}</button>
           </div>
         </form>
       </div>
@@ -535,7 +553,7 @@ function openMenuModal(itemId = null) {
     saveData(currentData);
     closeModal('menu-modal');
     renderMenuTable();
-    showToast('Меню хадгалагдлаа.');
+    showToast(ta('admin_menu_saved'));
   });
 }
 
@@ -544,11 +562,11 @@ function editMenuItem(id) {
 }
 
 function deleteMenuItem(id) {
-  if (confirm('Энэ хоолыг устгах уу?')) {
+  if (confirm(ta('admin_delete_menu_confirm'))) {
     currentData.menu.items = currentData.menu.items.filter(i => i.id !== id);
     saveData(currentData);
     renderMenuTable();
-    showToast('Хоол устгагдлаа.');
+    showToast(ta('admin_menu_deleted'));
   }
 }
 
@@ -556,15 +574,15 @@ function deleteMenuItem(id) {
 function renderEventsTable() {
   const container = document.getElementById('events-table');
   container.innerHTML = `<table class="admin-table">
-    <thead><tr><th>Гарчиг</th><th>Ангилал</th><th>Тайлбар</th><th></th></tr></thead>
+    <thead><tr><th>${ta('title')}</th><th>${ta('category')}</th><th>${ta('description')}</th><th></th></tr></thead>
     <tbody>${currentData.events.map(evt => `
       <tr>
         <td>${escapeHtml(evt.title)}</td>
         <td>${escapeHtml(evt.category)}</td>
         <td>${escapeHtml(evt.description)}</td>
         <td class="admin-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editEvent('${evt.id}')">Засах</button>
-          <button class="btn btn-secondary btn-sm" onclick="deleteEvent('${evt.id}')" style="color:#991b1b;border-color:#fecaca">Устгах</button>
+          <button class="btn btn-secondary btn-sm" onclick="editEvent('${evt.id}')">${ta('edit')}</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteEvent('${evt.id}')" style="color:#991b1b;border-color:#fecaca">${ta('admin_delete')}</button>
         </td>
       </tr>
     `).join('')}</tbody>
@@ -574,11 +592,12 @@ function renderEventsTable() {
 function openEventModal(eventId = null) {
   const evt = eventId ? currentData.events.find(e => e.id === eventId) : {};
   const isEdit = !!eventId;
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
 
   const modalHtml = `
     <div id="event-modal" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem">
       <div class="booking-form" style="width:100%;max-width:560px">
-        <h3 style="margin-bottom:1.25rem">${isEdit ? 'Event засах' : 'Шинэ event нэмэх'}</h3>
+        <h3 style="margin-bottom:1.25rem">${isEdit ? ta('admin_edit_event') : ta('admin_add_event_title')}</h3>
         <form id="event-form" class="admin-form">
           <input type="hidden" name="id" value="${evt.id || ''}">
           <div class="form-group">
@@ -588,9 +607,9 @@ function openEventModal(eventId = null) {
           <div class="form-group">
             <label class="form-label">Ангилал</label>
             <select name="category" class="form-select">
-              <option value="corporate" ${evt.category === 'corporate' ? 'selected' : ''}>Байгууллагын</option>
-              <option value="wedding" ${evt.category === 'wedding' ? 'selected' : ''}>Хурим</option>
-              <option value="family" ${evt.category === 'family' ? 'selected' : ''}>Гэр бүлийн</option>
+              <option value="corporate" ${evt.category === 'corporate' ? 'selected' : ''}>${lang === 'en' ? 'Corporate' : 'Байгууллагын'}</option>
+              <option value="wedding" ${evt.category === 'wedding' ? 'selected' : ''}>${lang === 'en' ? 'Wedding' : 'Хурим'}</option>
+              <option value="family" ${evt.category === 'family' ? 'selected' : ''}>${lang === 'en' ? 'Family' : 'Гэр бүлийн'}</option>
             </select>
           </div>
           <div class="form-group">
@@ -606,8 +625,8 @@ function openEventModal(eventId = null) {
             <input type="text" name="image" class="form-input" value="${escapeHtml(evt.image || '')}">
           </div>
           <div class="flex gap-3" style="justify-content:flex-end">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('event-modal')">Болих</button>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('event-modal')">${ta('cancel')}</button>
+            <button type="submit" class="btn btn-primary">${ta('save')}</button>
           </div>
         </form>
       </div>
@@ -636,7 +655,7 @@ function openEventModal(eventId = null) {
     saveData(currentData);
     closeModal('event-modal');
     renderEventsTable();
-    showToast('Event хадгалагдлаа.');
+    showToast(ta('admin_event_saved'));
   });
 }
 
@@ -645,11 +664,11 @@ function editEvent(id) {
 }
 
 function deleteEvent(id) {
-  if (confirm('Энэ event-ийг устгах уу?')) {
+  if (confirm(ta('admin_delete_event_confirm'))) {
     currentData.events = currentData.events.filter(e => e.id !== id);
     saveData(currentData);
     renderEventsTable();
-    showToast('Event устгагдлаа.');
+    showToast(ta('admin_event_deleted'));
   }
 }
 
@@ -657,15 +676,15 @@ function deleteEvent(id) {
 function renderGalleryTable() {
   const container = document.getElementById('gallery-table');
   container.innerHTML = `<table class="admin-table">
-    <thead><tr><th>Зураг</th><th>Гарчиг</th><th>Ангилал</th><th></th></tr></thead>
+    <thead><tr><th>${ta('image')}</th><th>${ta('title')}</th><th>${ta('category')}</th><th></th></tr></thead>
     <tbody>${currentData.gallery.map(img => `
       <tr>
         <td><img src="${escapeHtml(img.src)}" alt="" style="width:80px;height:50px;object-fit:cover;border-radius:var(--radius-sm)"></td>
         <td>${escapeHtml(img.title)}</td>
         <td>${escapeHtml(img.category)}</td>
         <td class="admin-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editGalleryItem('${img.id}')">Засах</button>
-          <button class="btn btn-secondary btn-sm" onclick="deleteGalleryItem('${img.id}')" style="color:#991b1b;border-color:#fecaca">Устгах</button>
+          <button class="btn btn-secondary btn-sm" onclick="editGalleryItem('${img.id}')">${ta('edit')}</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteGalleryItem('${img.id}')" style="color:#991b1b;border-color:#fecaca">${ta('admin_delete')}</button>
         </td>
       </tr>
     `).join('')}</tbody>
@@ -675,11 +694,12 @@ function renderGalleryTable() {
 function openGalleryModal(itemId = null) {
   const img = itemId ? currentData.gallery.find(g => g.id === itemId) : {};
   const isEdit = !!itemId;
+  const lang = typeof getLang === 'function' ? getLang() : 'mn';
 
   const modalHtml = `
     <div id="gallery-modal" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem">
       <div class="booking-form" style="width:100%;max-width:480px">
-        <h3 style="margin-bottom:1.25rem">${isEdit ? 'Зураг засах' : 'Шинэ зураг нэмэх'}</h3>
+        <h3 style="margin-bottom:1.25rem">${isEdit ? ta('admin_edit_gallery') : ta('admin_add_gallery_title')}</h3>
         <form id="gallery-form" class="admin-form">
           <input type="hidden" name="id" value="${img.id || ''}">
           <div class="form-group">
@@ -693,17 +713,17 @@ function openGalleryModal(itemId = null) {
           <div class="form-group">
             <label class="form-label">Ангилал</label>
             <select name="category" class="form-select">
-              <option value="resort" ${img.category === 'resort' ? 'selected' : ''}>Амралтын газар</option>
-              <option value="nature" ${img.category === 'nature' ? 'selected' : ''}>Байгаль</option>
-              <option value="rooms" ${img.category === 'rooms' ? 'selected' : ''}>Өрөө</option>
-              <option value="food" ${img.category === 'food' ? 'selected' : ''}>Хоол</option>
-              <option value="events" ${img.category === 'events' ? 'selected' : ''}>Event</option>
-              <option value="services" ${img.category === 'services' ? 'selected' : ''}>Үйлчилгээ</option>
+              <option value="resort" ${img.category === 'resort' ? 'selected' : ''}>${lang === 'en' ? 'Resort' : 'Амралтын газар'}</option>
+              <option value="nature" ${img.category === 'nature' ? 'selected' : ''}>${lang === 'en' ? 'Nature' : 'Байгаль'}</option>
+              <option value="rooms" ${img.category === 'rooms' ? 'selected' : ''}>${lang === 'en' ? 'Rooms' : 'Өрөө'}</option>
+              <option value="food" ${img.category === 'food' ? 'selected' : ''}>${lang === 'en' ? 'Food' : 'Хоол'}</option>
+              <option value="events" ${img.category === 'events' ? 'selected' : ''}>${lang === 'en' ? 'Events' : 'Event'}</option>
+              <option value="services" ${img.category === 'services' ? 'selected' : ''}>${lang === 'en' ? 'Services' : 'Үйлчилгээ'}</option>
             </select>
           </div>
           <div class="flex gap-3" style="justify-content:flex-end">
-            <button type="button" class="btn btn-secondary" onclick="closeModal('gallery-modal')">Болих</button>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('gallery-modal')">${ta('cancel')}</button>
+            <button type="submit" class="btn btn-primary">${ta('save')}</button>
           </div>
         </form>
       </div>
@@ -730,7 +750,7 @@ function openGalleryModal(itemId = null) {
     saveData(currentData);
     closeModal('gallery-modal');
     renderGalleryTable();
-    showToast('Зураг хадгалагдлаа.');
+    showToast(ta('admin_gallery_saved'));
   });
 }
 
@@ -739,11 +759,11 @@ function editGalleryItem(id) {
 }
 
 function deleteGalleryItem(id) {
-  if (confirm('Энэ зургийг устгах уу?')) {
+  if (confirm(ta('admin_delete_gallery_confirm'))) {
     currentData.gallery = currentData.gallery.filter(g => g.id !== id);
     saveData(currentData);
     renderGalleryTable();
-    showToast('Зураг устгагдлаа.');
+    showToast(ta('admin_gallery_deleted'));
   }
 }
 
@@ -776,7 +796,7 @@ function initSettingsForm() {
       tagline: form.tagline.value
     };
     saveData(currentData);
-    showToast('Тохиргоо хадгалагдлаа.');
+    showToast(ta('admin_settings_saved'));
   });
 }
 

@@ -21,40 +21,28 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Багцууд</span>
-        <h1 class="page-header-title">Амралтын багцууд</h1>
-        <p class="page-header-desc">Гэр бүл, хосууд, байгууллагад зориулсан бүрэн багц</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="packages_label">Багцууд</span>
+        <h1 class="page-header-title" data-i18n="packages_page_title">Амралтын багцууд</h1>
+        <p class="page-header-desc" data-i18n="packages_page_desc">Гэр бүл, хосууд, байгууллагад зориулсан бүрэн багц</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Багц сонгох</span>
-          <h2 class="section-title">Танд тохирсон багцыг олоорой</h2>
-          <p class="section-desc">Хүний тоо, төрөл, үнээр шүүж, хамгийн тохиромжтой багцаа сонгоорой.</p>
+          <span class="section-label" id="packages-section-label">Багц сонгох</span>
+          <h2 class="section-title" id="packages-title">Танд тохирсон багцыг олоорой</h2>
+          <p class="section-desc" id="packages-subtitle">Хүний тоо, төрөл, үнээр шүүж, хамгийн тохиромжтой багцаа сонгоорой.</p>
         </div>
 
         <div class="filters">
           <div class="filter-group">
-            <label class="filter-label">Багцын төрөл</label>
-            <select class="form-select" id="filter-type">
-              <option value="all">Бүгд</option>
-              <option value="family">Гэр бүлийн</option>
-              <option value="couple">Хосуудын</option>
-              <option value="corporate">Байгууллагын</option>
-              <option value="event">Event</option>
-            </select>
+            <label class="filter-label" id="filter-type-label">Багцын төрөл</label>
+            <select class="form-select" id="filter-type"></select>
           </div>
           <div class="filter-group">
-            <label class="filter-label">Хүний тоо</label>
-            <select class="form-select" id="filter-people">
-              <option value="all">Бүгд</option>
-              <option value="2">2 хүртэл</option>
-              <option value="5">5 хүртэл</option>
-              <option value="10">10+</option>
-              <option value="20">20+</option>
-            </select>
+            <label class="filter-label" id="filter-people-label">Хүний тоо</label>
+            <select class="form-select" id="filter-people"></select>
           </div>
         </div>
 
@@ -71,9 +59,47 @@
   <script>
     function renderPackages() {
       const data = getData();
+      const lang = getLang();
       const grid = document.getElementById('packages-grid');
       const typeFilter = document.getElementById('filter-type');
       const peopleFilter = document.getElementById('filter-people');
+
+      const typeOptions = {
+        mn: [
+          { value: 'all', text: 'Бүгд' },
+          { value: 'family', text: 'Гэр бүлийн' },
+          { value: 'couple', text: 'Хосуудын' },
+          { value: 'corporate', text: 'Байгууллагын' },
+          { value: 'event', text: 'Event' }
+        ],
+        en: [
+          { value: 'all', text: 'All' },
+          { value: 'family', text: 'Family' },
+          { value: 'couple', text: 'Couple' },
+          { value: 'corporate', text: 'Corporate' },
+          { value: 'event', text: 'Event' }
+        ]
+      };
+
+      const peopleOptions = {
+        mn: [
+          { value: 'all', text: 'Бүгд' },
+          { value: '2', text: '2 хүртэл' },
+          { value: '5', text: '5 хүртэл' },
+          { value: '10', text: '10+' },
+          { value: '20', text: '20+' }
+        ],
+        en: [
+          { value: 'all', text: 'All' },
+          { value: '2', text: 'Up to 2' },
+          { value: '5', text: 'Up to 5' },
+          { value: '10', text: '10+' },
+          { value: '20', text: '20+' }
+        ]
+      };
+
+      typeFilter.innerHTML = (typeOptions[lang] || typeOptions.mn).map(o => `<option value="${o.value}">${o.text}</option>`).join('');
+      peopleFilter.innerHTML = (peopleOptions[lang] || peopleOptions.mn).map(o => `<option value="${o.value}">${o.text}</option>`).join('');
 
       function parsePeople(peopleStr) {
         const match = peopleStr.match(/(\d+)/g);
@@ -82,6 +108,8 @@
         if (nums.length === 1) return [nums[0], nums[0]];
         return [nums[0], nums[1]];
       }
+
+      const detailText = lang === 'en' ? 'Details' : 'Дэлгэрэнгүй';
 
       function render() {
         const type = typeFilter.value;
@@ -118,7 +146,7 @@
               </ul>
               <div class="card-footer">
                 <div><span class="price">${formatPrice(pkg.price)}</span> <span class="price-unit">/${pkg.priceUnit}</span></div>
-                <a href="package-detail.html?id=${pkg.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+                <a href="package-detail.html?id=${pkg.id}" class="btn btn-outline btn-sm">${detailText}</a>
               </div>
             </div>
           </article>
@@ -133,6 +161,18 @@
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
+      const lang = getLang();
+      const labels = {
+        mn: { section: 'Багц сонгох', title: 'Танд тохирсон багцыг олоорой', subtitle: 'Хүний тоо, төрөл, үнээр шүүж, хамгийн тохиромжтой багцаа сонгоорой.', type: 'Багцын төрөл', people: 'Хүний тоо' },
+        en: { section: 'Choose a Package', title: 'Find the Right Package for You', subtitle: 'Filter by people, type, and price to find your perfect package.', type: 'Package type', people: 'Number of people' }
+      };
+      const t = labels[lang] || labels.mn;
+      document.getElementById('packages-section-label').textContent = t.section;
+      document.getElementById('packages-title').textContent = t.title;
+      document.getElementById('packages-subtitle').textContent = t.subtitle;
+      document.getElementById('filter-type-label').textContent = t.type;
+      document.getElementById('filter-people-label').textContent = t.people;
+
       renderPackages();
       const result = await loadErxesData();
       if (result.success && result.packageCount) {

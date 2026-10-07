@@ -21,18 +21,18 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Өрөө</span>
-        <h1 class="page-header-title">Өрөөний сонголт</h1>
-        <p class="page-header-desc">Байгаль дундах тав тухтай унтлагын өрөө</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="rooms_label">Өрөө</span>
+        <h1 class="page-header-title" data-i18n="rooms_page_title">Өрөөний сонголт</h1>
+        <p class="page-header-desc" data-i18n="rooms_page_desc">Байгаль дундах тав тухтай унтлагын өрөө</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Бүх өрөө</span>
-          <h2 class="section-title">Танд тохирсон өрөөг сонгоорой</h2>
-          <p class="section-desc">Гэр, гэр бүлийн гэр, VIP байшин, хамтын өрөө — бүгд цэвэрхэн, дулаахан, аюулгүй.</p>
+          <span class="section-label" data-i18n="all_rooms">Бүх өрөө</span>
+          <h2 class="section-title" id="rooms-title">Танд тохирсон өрөөг сонгоорой</h2>
+          <p class="section-desc" id="rooms-subtitle">Гэр, гэр бүлийн гэр, VIP байшин, хамтын өрөө — бүгд цэвэрхэн, дулаахан, аюулгүй.</p>
         </div>
         <div class="grid grid-3" id="rooms-grid"></div>
       </div>
@@ -47,7 +47,16 @@
   <script>
     function renderRooms() {
       const data = getData();
+      const lang = getLang();
       const grid = document.getElementById('rooms-grid');
+      const peopleLabel = lang === 'en' ? 'people' : 'хүн';
+      const detailText = lang === 'en' ? 'Details' : 'Дэлгэрэнгүй';
+
+      if (data.rooms.length === 0) {
+        grid.innerHTML = `<p class="text-center" data-i18n="no_rooms">Өрөө олдсонгүй.</p>`;
+        return;
+      }
+
       grid.innerHTML = data.rooms.map(room => `
         <article class="card">
           <div class="card-image">
@@ -57,7 +66,7 @@
             <h3 class="card-title">${escapeHtml(room.name)}</h3>
             <p class="card-text">${escapeHtml(room.shortDesc)}</p>
             <div class="card-meta">
-              <span>👤 ${room.capacity} хүн</span>
+              <span>👤 ${room.capacity} ${peopleLabel}</span>
               <span>🛏️ ${escapeHtml(room.beds)}</span>
             </div>
             <ul class="feature-list" style="margin-bottom:1.25rem;font-size:0.875rem">
@@ -65,7 +74,7 @@
             </ul>
             <div class="card-footer">
               <div><span class="price">${formatPrice(room.price)}</span> <span class="price-unit">/${room.priceUnit}</span></div>
-              <a href="room-detail.html?id=${room.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+              <a href="room-detail.html?id=${room.id}" class="btn btn-outline btn-sm">${detailText}</a>
             </div>
           </div>
         </article>
@@ -73,6 +82,15 @@
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
+      const lang = getLang();
+      const titles = {
+        mn: { title: 'Танд тохирсон өрөөг сонгоорой', subtitle: 'Гэр, гэр бүлийн гэр, VIP байшин, хамтын өрөө — бүгд цэвэрхэн, дулаахан, аюулгүй.' },
+        en: { title: 'Choose the Right Room for You', subtitle: 'Ger, family ger, VIP cabin, and shared rooms — all clean, warm, and safe.' }
+      };
+      const t = titles[lang] || titles.mn;
+      document.getElementById('rooms-title').textContent = t.title;
+      document.getElementById('rooms-subtitle').textContent = t.subtitle;
+
       renderRooms();
       const result = await loadErxesData();
       if (result.success && result.roomCount) {

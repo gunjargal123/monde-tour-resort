@@ -33,46 +33,56 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const data = getData();
+      const lang = getLang();
       const pkg = data.packages.find(p => p.id === id) || data.packages[0];
 
       document.title = `${pkg.name} — Monde Tour`;
 
+      const backText = lang === 'en' ? '← Back to all packages' : '← Бүх багц буцах';
+      const packageLabel = t('packages_label');
+      const peopleLabel = t('people');
+      const durationLabel = t('duration');
+      const includesLabel = t('includes');
+      const priceLabel = lang === 'en' ? 'Price' : 'Үнэ';
+      const bookText = lang === 'en' ? 'Book' : 'Захиалах';
+      const requestText = lang === 'en' ? 'Send request' : 'Хүсэлт илгээх';
+
       const detail = document.getElementById('package-detail');
       detail.innerHTML = `
-        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">← Бүх багц буцах</a>
+        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">${backText}</a>
         <div class="grid grid-2" style="gap:3rem;align-items:start">
           <div>
             <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%">
           </div>
           <div>
-            <span class="section-label">Багц</span>
+            <span class="section-label">${packageLabel}</span>
             <h1 style="font-size:2.5rem;margin-bottom:0.75rem">${escapeHtml(pkg.name)}</h1>
             <p style="font-size:1.125rem">${escapeHtml(pkg.description)}</p>
             <div class="card mt-6" style="padding:1.5rem">
               <div class="grid grid-2" style="gap:1rem">
                 <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Хүний тоо</p>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${peopleLabel}</p>
                   <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(pkg.people)}</p>
                 </div>
                 <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Хугацаа</p>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${durationLabel}</p>
                   <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(pkg.duration)}</p>
                 </div>
               </div>
             </div>
-            <h3 style="margin-top:2rem;margin-bottom:1rem">Багцад багтсан</h3>
+            <h3 style="margin-top:2rem;margin-bottom:1rem">${includesLabel}</h3>
             <ul class="feature-list">
               ${pkg.includes.map(i => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(i)}</li>`).join('')}
             </ul>
             <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
               <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:1rem">
                 <div>
-                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">Үнэ</p>
+                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
                   <p style="font-size:1.75rem;font-weight:700;color:var(--green-700)">${formatPrice(pkg.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${pkg.priceUnit}</span></p>
                 </div>
                 <div class="flex gap-3" style="flex-wrap:wrap">
-                  <a href="booking.html?package=${pkg.id}" class="btn btn-primary">Захиалах</a>
-                  <a href="booking.html?package=${pkg.id}" class="btn btn-secondary">Хүсэлт илгээх</a>
+                  <a href="booking.html?package=${pkg.id}" class="btn btn-primary">${bookText}</a>
+                  <a href="booking.html?package=${pkg.id}" class="btn btn-secondary">${requestText}</a>
                 </div>
               </div>
             </div>

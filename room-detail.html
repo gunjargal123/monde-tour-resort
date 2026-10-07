@@ -40,13 +40,24 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const data = getData();
+      const lang = getLang();
       const room = data.rooms.find(r => r.id === id) || data.rooms[0];
 
       document.title = `${room.name} — Monde Tour`;
 
+      const peopleLabel = lang === 'en' ? 'people' : 'хүн';
+      const bookText = lang === 'en' ? 'Book' : 'Захиалах';
+      const requestText = lang === 'en' ? 'Booking request' : 'Захиалгын хүсэлт';
+      const backText = lang === 'en' ? '← Back to all rooms' : '← Бүх өрөө буцах';
+      const capacityLabel = t('capacity');
+      const bedsLabel = t('beds');
+      const facilitiesLabel = lang === 'en' ? 'Amenities' : 'Үндсэн тохижилт';
+      const priceLabel = lang === 'en' ? 'Price' : 'Үнэ';
+      const roomLabel = t('rooms_label');
+
       const detail = document.getElementById('room-detail');
       detail.innerHTML = `
-        <a href="rooms.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">← Бүх өрөө буцах</a>
+        <a href="rooms.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">${backText}</a>
         <div class="grid grid-2" style="gap:3rem;align-items:start">
           <div>
             <div class="gallery-grid" id="room-gallery" style="grid-auto-rows:180px">
@@ -58,34 +69,34 @@
             </div>
           </div>
           <div>
-            <span class="section-label">Өрөө</span>
+            <span class="section-label">${roomLabel}</span>
             <h1 style="font-size:2.5rem;margin-bottom:0.75rem">${escapeHtml(room.name)}</h1>
             <p style="font-size:1.125rem">${escapeHtml(room.description)}</p>
             <div class="card mt-6" style="padding:1.5rem">
               <div class="grid grid-2" style="gap:1rem">
                 <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Багтаамж</p>
-                  <p style="font-weight:600;color:var(--neutral-800)">${room.capacity} хүн</p>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${capacityLabel}</p>
+                  <p style="font-weight:600;color:var(--neutral-800)">${room.capacity} ${peopleLabel}</p>
                 </div>
                 <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Ор</p>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${bedsLabel}</p>
                   <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(room.beds)}</p>
                 </div>
               </div>
             </div>
-            <h3 style="margin-top:2rem;margin-bottom:1rem">Үндсэн тохижилт</h3>
+            <h3 style="margin-top:2rem;margin-bottom:1rem">${facilitiesLabel}</h3>
             <ul class="feature-list">
               ${room.facilities.map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
             </ul>
             <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
               <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:1rem">
                 <div>
-                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">Үнэ</p>
+                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
                   <p style="font-size:1.75rem;font-weight:700;color:var(--green-700)">${formatPrice(room.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${room.priceUnit}</span></p>
                 </div>
                 <div class="flex gap-3" style="flex-wrap:wrap">
-                  <a href="booking.html?room=${room.id}" class="btn btn-primary">Захиалах</a>
-                  <a href="booking.html?room=${room.id}" class="btn btn-secondary">Захиалгын хүсэлт</a>
+                  <a href="booking.html?room=${room.id}" class="btn btn-primary">${bookText}</a>
+                  <a href="booking.html?room=${room.id}" class="btn btn-secondary">${requestText}</a>
                 </div>
               </div>
             </div>

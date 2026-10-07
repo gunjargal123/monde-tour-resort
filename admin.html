@@ -20,17 +20,17 @@
   <div id="admin-login" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--beige-100);padding:1rem">
     <div class="booking-form" style="width:100%;max-width:400px">
       <div class="text-center mb-6">
-        <h1 style="font-size:1.5rem;margin-bottom:0.5rem">Monde Tour Admin</h1>
-        <p class="mb-0">Нэвтрэх мэдээллээ оруулна уу</p>
+        <h1 style="font-size:1.5rem;margin-bottom:0.5rem" data-i18n="admin_login_title">Monde Tour Admin</h1>
+        <p class="mb-0" data-i18n="admin_login_desc">Нэвтрэх мэдээллээ оруулна уу</p>
       </div>
       <form id="login-form">
         <div class="form-group">
-          <label class="form-label">Нууц үг</label>
+          <label class="form-label" data-i18n="admin_password">Нууц үг</label>
           <input type="password" id="admin-password" class="form-input" placeholder="admin123" required>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%">Нэвтрэх</button>
+        <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="login">Нэвтрэх</button>
       </form>
-      <p class="text-center mt-4" style="font-size:0.875rem">Анхны нууц үг: <code>admin123</code></p>
+      <p class="text-center mt-4" style="font-size:0.875rem"><span data-i18n="admin_default_password">Анхны нууц үг</span>: <code>admin123</code></p>
     </div>
   </div>
 
@@ -41,49 +41,49 @@
         <span>Monde Tour</span>
       </div>
       <ul class="admin-nav">
-        <li><a href="#" data-section="dashboard" class="active">📊 Хяналтын самбар</a></li>
-        <li><a href="#" data-section="bookings">📋 Захиалгууд</a></li>
-        <li><a href="#" data-section="rooms">🏠 Өрөө</a></li>
-        <li><a href="#" data-section="packages">📦 Багц</a></li>
-        <li><a href="#" data-section="menu">🍽️ Меню</a></li>
-        <li><a href="#" data-section="events">🎉 Event</a></li>
-        <li><a href="#" data-section="gallery">🖼️ Зургийн цомог</a></li>
-        <li><a href="#" data-section="settings">⚙️ Тохиргоо</a></li>
+        <li><a href="#" data-section="dashboard" class="active" data-i18n="admin_dashboard">📊 Хяналтын самбар</a></li>
+        <li><a href="#" data-section="bookings" data-i18n="admin_bookings">📋 Захиалгууд</a></li>
+        <li><a href="#" data-section="rooms" data-i18n="admin_rooms">🏠 Өрөө</a></li>
+        <li><a href="#" data-section="packages" data-i18n="admin_packages">📦 Багц</a></li>
+        <li><a href="#" data-section="menu" data-i18n="admin_menu">🍽️ Меню</a></li>
+        <li><a href="#" data-section="events" data-i18n="admin_events">🎉 Event</a></li>
+        <li><a href="#" data-section="gallery" data-i18n="admin_gallery">🖼️ Зургийн цомог</a></li>
+        <li><a href="#" data-section="settings" data-i18n="admin_settings">⚙️ Тохиргоо</a></li>
       </ul>
       <div style="margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1)">
-        <a href="index.html" class="btn btn-light btn-sm" style="width:100%">Вэб рүү буцах</a>
-        <button id="logout-btn" class="btn btn-secondary btn-sm mt-2" style="width:100%">Гарах</button>
+        <a href="index.html" class="btn btn-light btn-sm" style="width:100%" data-i18n="back_to_site">Вэб рүү буцах</a>
+        <button id="logout-btn" class="btn btn-secondary btn-sm mt-2" style="width:100%" data-i18n="logout">Гарах</button>
       </div>
     </aside>
 
     <main class="admin-main">
       <div class="admin-header">
-        <h1 id="admin-section-title">Хяналтын самбар</h1>
-        <button id="reset-data-btn" class="btn btn-secondary btn-sm">Өгөгдлийг анхны байдалд авах</button>
+        <h1 id="admin-section-title" data-i18n="admin_dashboard">Хяналтын самбар</h1>
+        <button id="reset-data-btn" class="btn btn-secondary btn-sm" data-i18n="admin_reset_data">Өгөгдлийг анхны байдалд авах</button>
       </div>
 
       <!-- Dashboard -->
       <div id="section-dashboard" class="admin-content active">
         <div class="grid grid-4" style="margin-bottom:1.5rem">
           <div class="admin-card text-center">
-            <p style="font-size:0.875rem;color:var(--neutral-500)">Нийт өрөө</p>
+            <p style="font-size:0.875rem;color:var(--neutral-500)" data-i18n="admin_total_rooms">Нийт өрөө</p>
             <p id="dash-room-count" style="font-size:2rem;font-weight:700;color:var(--green-700)">0</p>
           </div>
           <div class="admin-card text-center">
-            <p style="font-size:0.875rem;color:var(--neutral-500)">Нийт багц</p>
+            <p style="font-size:0.875rem;color:var(--neutral-500)" data-i18n="admin_total_packages">Нийт багц</p>
             <p id="dash-package-count" style="font-size:2rem;font-weight:700;color:var(--green-700)">0</p>
           </div>
           <div class="admin-card text-center">
-            <p style="font-size:0.875rem;color:var(--neutral-500)">Шинэ захиалга</p>
+            <p style="font-size:0.875rem;color:var(--neutral-500)" data-i18n="admin_new_bookings">Шинэ захиалга</p>
             <p id="dash-new-bookings" style="font-size:2rem;font-weight:700;color:var(--green-700)">0</p>
           </div>
           <div class="admin-card text-center">
-            <p style="font-size:0.875rem;color:var(--neutral-500)">Нийт захиалга</p>
+            <p style="font-size:0.875rem;color:var(--neutral-500)" data-i18n="admin_total_bookings">Нийт захиалга</p>
             <p id="dash-total-bookings" style="font-size:2rem;font-weight:700;color:var(--green-700)">0</p>
           </div>
         </div>
         <div class="admin-card">
-          <h3 style="margin-bottom:1rem">Сүүлийн захиалгууд</h3>
+          <h3 style="margin-bottom:1rem" data-i18n="admin_recent_bookings">Сүүлийн захиалгууд</h3>
           <div id="dash-recent-bookings"></div>
         </div>
       </div>
@@ -91,7 +91,7 @@
       <!-- Bookings -->
       <div id="section-bookings" class="admin-content">
         <div class="admin-card">
-          <h3 style="margin-bottom:1rem">Бүх захиалгын хүсэлт</h3>
+          <h3 style="margin-bottom:1rem" data-i18n="admin_all_bookings">Бүх захиалгын хүсэлт</h3>
           <div style="overflow-x:auto">
             <table class="admin-table">
               <thead>
@@ -116,8 +116,8 @@
       <div id="section-rooms" class="admin-content">
         <div class="admin-card">
           <div class="flex justify-between items-center mb-4" style="flex-wrap:wrap;gap:1rem">
-            <h3 style="margin:0">Өрөөний жагсаалт</h3>
-            <button class="btn btn-primary btn-sm" onclick="openRoomModal()">+ Өрөө нэмэх</button>
+            <h3 style="margin:0" data-i18n="admin_room_list">Өрөөний жагсаалт</h3>
+            <button class="btn btn-primary btn-sm" onclick="openRoomModal()" data-i18n="admin_add_room">+ Өрөө нэмэх</button>
           </div>
           <div id="rooms-table"></div>
         </div>
@@ -127,8 +127,8 @@
       <div id="section-packages" class="admin-content">
         <div class="admin-card">
           <div class="flex justify-between items-center mb-4" style="flex-wrap:wrap;gap:1rem">
-            <h3 style="margin:0">Багцын жагсаалт</h3>
-            <button class="btn btn-primary btn-sm" onclick="openPackageModal()">+ Багц нэмэх</button>
+            <h3 style="margin:0" data-i18n="admin_package_list">Багцын жагсаалт</h3>
+            <button class="btn btn-primary btn-sm" onclick="openPackageModal()" data-i18n="admin_add_package">+ Багц нэмэх</button>
           </div>
           <div id="packages-table"></div>
         </div>
@@ -138,8 +138,8 @@
       <div id="section-menu" class="admin-content">
         <div class="admin-card">
           <div class="flex justify-between items-center mb-4" style="flex-wrap:wrap;gap:1rem">
-            <h3 style="margin:0">Меню</h3>
-            <button class="btn btn-primary btn-sm" onclick="openMenuModal()">+ Хоол нэмэх</button>
+            <h3 style="margin:0" data-i18n="admin_menu_list">Меню</h3>
+            <button class="btn btn-primary btn-sm" onclick="openMenuModal()" data-i18n="admin_add_menu">+ Хоол нэмэх</button>
           </div>
           <div id="menu-table"></div>
         </div>
@@ -149,8 +149,8 @@
       <div id="section-events" class="admin-content">
         <div class="admin-card">
           <div class="flex justify-between items-center mb-4" style="flex-wrap:wrap;gap:1rem">
-            <h3 style="margin:0">Event-ийн жагсаалт</h3>
-            <button class="btn btn-primary btn-sm" onclick="openEventModal()">+ Event нэмэх</button>
+            <h3 style="margin:0" data-i18n="admin_event_list">Event-ийн жагсаалт</h3>
+            <button class="btn btn-primary btn-sm" onclick="openEventModal()" data-i18n="admin_add_event">+ Event нэмэх</button>
           </div>
           <div id="events-table"></div>
         </div>
@@ -160,8 +160,8 @@
       <div id="section-gallery" class="admin-content">
         <div class="admin-card">
           <div class="flex justify-between items-center mb-4" style="flex-wrap:wrap;gap:1rem">
-            <h3 style="margin:0">Зургийн цомог</h3>
-            <button class="btn btn-primary btn-sm" onclick="openGalleryModal()">+ Зураг нэмэх</button>
+            <h3 style="margin:0" data-i18n="admin_gallery_list">Зургийн цомог</h3>
+            <button class="btn btn-primary btn-sm" onclick="openGalleryModal()" data-i18n="admin_add_gallery">+ Зураг нэмэх</button>
           </div>
           <div id="gallery-table"></div>
         </div>
@@ -170,7 +170,7 @@
       <!-- Settings -->
       <div id="section-settings" class="admin-content">
         <div class="admin-card">
-          <h3 style="margin-bottom:1rem">Ерөнхий тохиргоо</h3>
+          <h3 style="margin-bottom:1rem" data-i18n="admin_general_settings">Ерөнхий тохиргоо</h3>
           <form id="settings-form" class="admin-form">
             <div class="form-row">
               <div class="form-group">
@@ -210,7 +210,7 @@
               <label class="form-label">Товч танилцуулга</label>
               <textarea name="tagline" class="form-textarea" rows="2"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Хадгалах</button>
+            <button type="submit" class="btn btn-primary" data-i18n="admin_save">Хадгалах</button>
           </form>
         </div>
       </div>
