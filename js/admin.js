@@ -781,6 +781,7 @@ function initSettingsForm() {
   form.facebook.value = s.facebook;
   form.instagram.value = s.instagram;
   form.tagline.value = s.tagline;
+  if (form.erxesClientPortalId) form.erxesClientPortalId.value = s.erxesClientPortalId || '';
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -793,7 +794,8 @@ function initSettingsForm() {
       address: form.address.value,
       facebook: form.facebook.value,
       instagram: form.instagram.value,
-      tagline: form.tagline.value
+      tagline: form.tagline.value,
+      erxesClientPortalId: form.erxesClientPortalId ? form.erxesClientPortalId.value : ''
     };
     saveData(currentData);
     showToast(ta('admin_settings_saved'));

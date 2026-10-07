@@ -38,7 +38,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       const data = getData();
       const lang = getLang();
-      const events = lang === 'en' && data.eventsEn ? data.eventsEn : data.events;
+      let events = lang === 'en' && data.eventsEn ? data.eventsEn : data.events;
+
+      // Merge Erxes CMS content for events if available
+      events = events.map(evt => {
+        const cms = data.cms?.[evt.category];
+        if (cms && cms.content) {
+          return { ...evt, title: cms.title || evt.title, description: cms.content };
+        }
+        return evt;
+      });
 
       // Header text
       if (lang === 'en') {

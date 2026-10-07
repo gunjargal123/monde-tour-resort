@@ -53,6 +53,32 @@ async function fetchErxesProducts() {
   return data.products || [];
 }
 
+// Fetch CMS posts from Erxes (Content > Posts)
+async function fetchErxesCmsPosts(clientPortalId = '') {
+  const variables = {};
+  if (clientPortalId) variables.clientPortalId = clientPortalId;
+
+  try {
+    const data = await erxesQuery(`
+      query CmsPosts($clientPortalId: String) {
+        cmsPosts(clientPortalId: $clientPortalId) {
+          _id
+          title
+          content
+          categoryIds
+          categories { _id name slug parentId }
+          status
+          createdAt
+        }
+      }
+    `, variables);
+    return data.cmsPosts || [];
+  } catch (err) {
+    console.error('fetchErxesCmsPosts error:', err.message);
+    return [];
+  }
+}
+
 // Map Erxes product to our room model
 function mapErxesProductToRoom(product) {
   const images = [];
@@ -124,6 +150,68 @@ function mapErxesProductToPackage(product) {
   };
 }
 
+// Load CMS posts and map them to local pages/events by category name
+async function loadErxesCmsData() {
+  try {
+    const data = getData();
+    const clientPortalId = data.settings.erxesClientPortalId || '';
+    const posts = await fetchErxesCmsPosts(clientPortalId);
+
+    if (posts.length === 0) {
+      return { success: true, cmsCount: 0 };
+    }
+
+    if (!data.cms) data.cms = {};
+
+    const categoryMap = {
+      'Бидний тухай': 'about',
+      'Байршил': 'location',
+      'Ресторан': 'restaurant',
+      'Хурим': 'wedding',
+      'Гэр бүлийн баяр': 'family',
+      'Байгууллагын арга хэмжээ': 'corporate',
+      'Team building & Corporate events': 'corporate'
+    };
+
+    posts.forEach(post => {
+      const categoryName = post.categories && post.categories[0] ? post.categories[0].name : '';
+      const key = categoryMap[categoryName];
+      if (!key) return;
+
+      data.cms[key] = {
+        id: post._id,
+        title: post.title,
+        content: stripHtml(post.content || ''),
+        category: categoryName,
+        _source: 'erxes'
+      };
+
+      // Also save English content if post title/content look English
+      if (/^[A-Za-z\s&\-]+$/.test(post.title) && key !== 'about' && key !== 'location') {
+        if (!data.cms[key + 'En']) data.cms[key + 'En'] = {};
+        data.cms[key + 'En'] = {
+          id: post._id,
+          title: post.title,
+          content: stripHtml(post.content || ''),
+          category: categoryName,
+          _source: 'erxes'
+        };
+      }
+    });
+
+    saveData(data);
+    return { success: true, cmsCount: posts.length };
+  } catch (err) {
+    console.error('loadErxesCmsData error:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+function stripHtml(html) {
+  if (!html) return '';
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 // Load Erxes data and merge with local data
 async function loadErxesData() {
   try {
@@ -155,8 +243,17 @@ async function loadErxesData() {
       data.packages = packageProducts.map(mapErxesProductToPackage);
     }
 
+    // Load CMS posts in parallel
+    const cmsResult = await loadErxesCmsData();
+
     saveData(data);
-    return { success: true, roomCount: roomProducts.length, foodCount: foodProducts.length, packageCount: packageProducts.length };
+    return {
+      success: true,
+      roomCount: roomProducts.length,
+      foodCount: foodProducts.length,
+      packageCount: packageProducts.length,
+      cmsCount: cmsResult.cmsCount || 0
+    };
   } catch (err) {
     console.error('loadErxesData error:', err);
     return { success: false, error: err.message };

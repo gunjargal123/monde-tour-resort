@@ -127,9 +127,11 @@
         }
       };
       const t = intro[lang] || intro.mn;
+      const cmsRestaurant = data.cms?.restaurant;
+
       document.getElementById('restaurant-label').textContent = t.restaurant;
-      document.getElementById('food-title').textContent = t.title;
-      document.getElementById('food-text1').textContent = t.text1;
+      document.getElementById('food-title').textContent = cmsRestaurant?.title || t.title;
+      document.getElementById('food-text1').textContent = cmsRestaurant?.content || t.text1;
       document.getElementById('food-text2').textContent = t.text2;
 
       renderMenu();
