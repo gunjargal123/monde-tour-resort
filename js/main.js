@@ -499,14 +499,12 @@ function renderHeader() {
           <span>${escapeHtml(settings.siteName)}</span>
         </a>
         <nav class="nav">
-          <a href="index.html" class="nav-link" data-i18n="nav_home">Нүүр</a>
           <a href="about.html" class="nav-link" data-i18n="nav_about">Бидний тухай</a>
           <a href="rooms.html" class="nav-link" data-i18n="nav_rooms">Байрлах өрөө</a>
           <a href="packages.html" class="nav-link" data-i18n="nav_packages">Багц</a>
           <a href="food.html" class="nav-link" data-i18n="nav_food">Хоолны үйлчилгээ</a>
           <a href="events.html" class="nav-link" data-i18n="nav_events">Арга хэмжээ</a>
           <a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Зургийн цомог</a>
-          <a href="contact.html" class="nav-link" data-i18n="nav_contact">Холбогдох</a>
         </nav>
         <div class="header-actions">
           <button class="lang-switch" onclick="toggleLanguage()" title="Switch language">${lang.toUpperCase()}</button>
@@ -519,14 +517,12 @@ function renderHeader() {
     </header>
     <div class="mobile-menu">
       <button class="mobile-menu-close" aria-label="Цэс хаах">✕</button>
-      <a href="index.html" data-i18n="nav_home">Нүүр</a>
       <a href="about.html" data-i18n="nav_about">Бидний тухай</a>
       <a href="rooms.html" data-i18n="nav_rooms">Байрлах өрөө</a>
       <a href="packages.html" data-i18n="nav_packages">Багц</a>
       <a href="food.html" data-i18n="nav_food">Хоолны үйлчилгээ</a>
       <a href="events.html" data-i18n="nav_events">Арга хэмжээ</a>
       <a href="gallery.html" data-i18n="nav_gallery">Зургийн цомог</a>
-      <a href="contact.html" data-i18n="nav_contact">Холбогдох</a>
       <div id="mobile-auth-action" class="mobile-menu-cta"></div>
     </div>
   `;
