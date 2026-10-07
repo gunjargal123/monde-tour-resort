@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Профайл — Monde Tour</title>
+  <meta name="description" content="Monde Tour хэрэглэгчийн профайл, захиалгын түүх.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header" style="min-height:35vh">
+      <div class="page-header-bg">
+        <img src="images/hero-nature.jpg" alt="Monde Tour профайл">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)" data-i18n="profile">Профайл</span>
+        <h1 class="page-header-title" data-i18n="profile">Профайл</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:start;gap:3rem">
+          <div>
+            <div class="card" style="padding:2rem">
+              <div style="width:80px;height:80px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;margin-bottom:1.5rem" id="profile-avatar">👤</div>
+              <h2 class="section-title" style="margin-bottom:0.5rem" id="profile-name"></h2>
+              <p class="text-muted" id="profile-phone"></p>
+              <div class="mt-6 flex gap-3" style="flex-wrap:wrap">
+                <a href="booking.html" class="btn btn-primary" data-i18n="book_now">Захиалга өгөх</a>
+                <button class="btn btn-secondary" onclick="logoutUser()" data-i18n="logout">Гарах</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="section-title" data-i18n="my_bookings_title">Миний захиалгууд</h2>
+            <div id="profile-bookings"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        openAuthModal('login');
+        return;
+      }
+
+      const lang = getLang();
+      const data = getData();
+
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-phone').textContent = user.phone;
+      document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
+
+      const userBookings = data.bookings.filter(b => b.userId === user.id);
+      const container = document.getElementById('profile-bookings');
+
+      if (userBookings.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="padding:1.5rem">
+            <p class="mb-4" data-i18n="no_bookings">Одоогоор захиалга байхгүй.</p>
+            <a href="booking.html" class="btn btn-primary" data-i18n="book_now">Захиалга өгөх</a>
+          </div>
+        `;
+      } else {
+        container.innerHTML = userBookings.map(b => {
+          const dateLabel = lang === 'en' ? 'Arrival' : 'Ирэх';
+          const departureLabel = lang === 'en' ? 'Departure' : 'Гарах';
+          const peopleLabel = lang === 'en' ? 'people' : 'хүн';
+          return `
+          <div class="card" style="padding:1.5rem;margin-bottom:1rem">
+            <div class="flex justify-between items-start" style="flex-wrap:wrap;gap:1rem">
+              <div>
+                <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-500)">${new Date(b.createdAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'mn-MN')}</p>
+                <h3 class="card-title" style="margin-bottom:0.25rem">${serviceLabel(b.serviceType, lang)}</h3>
+                <p class="card-text mb-0">${escapeHtml(b.name)} · ${escapeHtml(b.phone)} · ${b.people} ${peopleLabel}</p>
+                ${b.arrivalDate ? `<p class="card-text mb-0">${dateLabel}: ${b.arrivalDate}${b.departureDate ? ' — ' + departureLabel + ': ' + b.departureDate : ''}</p>` : ''}
+              </div>
+              <span class="status-badge status-${b.status}">${statusLabel(b.status, lang)}</span>
+            </div>
+          </div>
+        `}).join('');
+      }
+
+      applyTranslations();
+    });
+
+    function serviceLabel(type, lang) {
+      const labels = {
+        mn: { room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event', wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад' },
+        en: { room: 'Room', package: 'Package', corporate: 'Corporate event', wedding: 'Wedding', family: 'Family celebration', other: 'Other' }
+      };
+      return labels[lang][type] || labels.mn[type] || type;
+    }
+
+    function statusLabel(status, lang) {
+      const labels = {
+        mn: { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' },
+        en: { new: 'New', contacted: 'Contacted', confirmed: 'Confirmed', cancelled: 'Cancelled' }
+      };
+      return labels[lang][status] || labels.mn[status] || status;
+    }
+  </script>
+</body>
+</html>

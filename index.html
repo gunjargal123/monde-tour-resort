@@ -61,16 +61,11 @@
       <div class="container">
         <div class="grid grid-2" style="align-items:center">
           <div>
-            <span class="section-label">Танилцуулга</span>
-            <h2 class="section-title">Байгаль дундах тав тухтай амралт</h2>
-            <p>Monde Tour нь Тэрэлжийн өвслөг толгод, цэвэр агаар дунд байрлах орчин үеийн амралтын газар юм. Бид уламжлалт Монгол гэрийн дулаахан орчин, орчин үеийн үйлчилгээг хослуулан, гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт зориулсан тав тухтай амралтын туршлагыг бүрдүүлдэг.</p>
-            <ul class="feature-list mt-6">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Улаанбаатараас 58 км — ойрхон байршил</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Гэр, модон байшин, хамтын өрөөний сонголт</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Уламжлалт ба орчин үеийн хоолны цэс</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Хурим, багийн бүтээлч ажил, гэр бүлийн баяр</li>
-            </ul>
-            <a href="about.html" class="btn btn-outline mt-6">Дэлгэрэнгүй</a>
+            <span class="section-label" data-i18n="intro_label">Танилцуулга</span>
+            <h2 class="section-title" data-i18n="intro_title">Байгаль дундах тав тухтай амралт</h2>
+            <p data-i18n="intro_text">Monde Tour нь Тэрэлжийн өвслөг толгод, цэвэр агаар дунд байрлах орчин үеийн амралтын газар юм. Бид уламжлалт Монгол гэрийн дулаахан орчин, орчин үеийн үйлчилгээг хослуулан, гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт зориулсан тав тухтай амралтын туршлагыг бүрдүүлдэг.</p>
+            <ul class="feature-list mt-6" id="intro-features"></ul>
+            <a href="about.html" class="btn btn-outline mt-6" data-i18n="learn_more">Дэлгэрэнгүй</a>
           </div>
           <div>
             <img src="images/mongolian-steppes.jpg" alt="Монголын өргөн тал нутаг" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl)">
@@ -83,9 +78,9 @@
     <section class="section section-sm" style="background:var(--beige-100)">
       <div class="container">
         <div class="section-header text-center" style="margin-left:auto;margin-right:auto">
-          <span class="section-label" style="justify-content:center">Үйлчилгээ</span>
-          <h2 class="section-title">Бид юу санал болгодог вэ?</h2>
-          <p class="section-desc">Амралт, хоол, event — бүгдийг нэг дороос</p>
+          <span class="section-label" style="justify-content:center" data-i18n="services_label">Үйлчилгээ</span>
+          <h2 class="section-title" data-i18n="services_title">Бид юу санал болгодог вэ?</h2>
+          <p class="section-desc" data-i18n="services_desc">Амралт, хоол, event — бүгдийг нэг дороос</p>
         </div>
         <div class="grid grid-4">
           <a href="rooms.html" class="service-card">
@@ -93,28 +88,28 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </div>
             <h3 data-i18n="service_rooms">Байрлах өрөө</h3>
-            <p>Гэр, байшин, хамтын өрөөний сонголт</p>
+            <p data-i18n="service_rooms_desc">Гэр, байшин, хамтын өрөөний сонголт</p>
           </a>
           <a href="food.html" class="service-card">
             <div class="service-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18-5v3a2 2 0 0 1-2 2h-3"/><path d="M12 12l0 9"/><path d="M8 21h8"/></svg>
             </div>
             <h3 data-i18n="service_food">Хоолны үйлчилгээ</h3>
-            <p>Уламжлалт хорхог, орчин үеийн цэс</p>
+            <p data-i18n="service_food_desc">Уламжлалт хорхог, орчин үеийн цэс</p>
           </a>
           <a href="packages.html" class="service-card">
             <div class="service-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
             </div>
             <h3 data-i18n="service_packages">Багц</h3>
-            <p>Гэр бүл, хос, байгууллагад зориулсан</p>
+            <p data-i18n="service_packages_desc">Гэр бүл, хос, байгууллагад зориулсан</p>
           </a>
           <a href="events.html" class="service-card">
             <div class="service-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
             </div>
             <h3 data-i18n="service_events">Арга хэмжээ</h3>
-            <p>Хурим, team building, баярын арга хэмжээ</p>
+            <p data-i18n="service_events_desc">Хурим, team building, баярын арга хэмжээ</p>
           </a>
         </div>
       </div>
@@ -124,13 +119,13 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Багцууд</span>
-          <h2 class="section-title">Онцлох багцууд</h2>
-          <p class="section-desc">Хамгийн их захиалагддаг, хамгийн тохиромжтой сонголтууд</p>
+          <span class="section-label" data-i18n="packages_label">Багцууд</span>
+          <h2 class="section-title" data-i18n="packages_title">Онцлох багцууд</h2>
+          <p class="section-desc" data-i18n="packages_desc">Хамгийн их захиалагддаг, хамгийн тохиромжтой сонголтууд</p>
         </div>
         <div class="grid grid-3" id="featured-packages"></div>
         <div class="text-center mt-8">
-          <a href="packages.html" class="btn btn-outline">Бүх багц харах</a>
+          <a href="packages.html" class="btn btn-outline" data-i18n="view_all_packages">Бүх багц харах</a>
         </div>
       </div>
     </section>
@@ -139,13 +134,13 @@
     <section class="section section-sm" style="background:var(--beige-100)">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Өрөө</span>
-          <h2 class="section-title">Онцлох өрөөнүүд</h2>
-          <p class="section-desc">Байгаль дундах тав тухтай унтлагын өрөө</p>
+          <span class="section-label" data-i18n="rooms_label">Өрөө</span>
+          <h2 class="section-title" data-i18n="rooms_title">Онцлох өрөөнүүд</h2>
+          <p class="section-desc" data-i18n="rooms_desc">Байгаль дундах тав тухтай унтлагын өрөө</p>
         </div>
         <div class="grid grid-3" id="featured-rooms"></div>
         <div class="text-center mt-8">
-          <a href="rooms.html" class="btn btn-outline">Бүх өрөө харах</a>
+          <a href="rooms.html" class="btn btn-outline" data-i18n="view_all_rooms">Бүх өрөө харах</a>
         </div>
       </div>
     </section>
@@ -154,9 +149,9 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Event</span>
-          <h2 class="section-title">Арга хэмжээ зохион байгуулах</h2>
-          <p class="section-desc">Байгууллагын уулзалтаас эхлээд хурим хүртэл — бид тусална</p>
+          <span class="section-label" data-i18n="events_label">Event</span>
+          <h2 class="section-title" data-i18n="events_title">Арга хэмжээ зохион байгуулах</h2>
+          <p class="section-desc" data-i18n="events_desc">Байгууллагын уулзалтаас эхлээд хурим хүртэл — бид тусална</p>
         </div>
         <div class="grid grid-3" id="event-cards"></div>
       </div>
@@ -166,13 +161,13 @@
     <section class="section section-sm" style="background:var(--green-900);color:var(--white)">
       <div class="container">
         <div class="section-header" style="max-width:100%;text-align:center">
-          <span class="section-label" style="justify-content:center;color:var(--green-300)">Зургийн цомог</span>
-          <h2 class="section-title" style="color:var(--white)">Monde Tour-ийн дүр төрх</h2>
-          <p class="section-desc" style="color:var(--green-300)">Байгаль, өрөө, хоол, event-ийн онцлох зургууд</p>
+          <span class="section-label" style="justify-content:center;color:var(--green-300)" data-i18n="gallery">Зургийн цомог</span>
+          <h2 class="section-title" style="color:var(--white)" data-i18n="gallery_title">Monde Tour-ийн дүр төрх</h2>
+          <p class="section-desc" style="color:var(--green-300)" data-i18n="gallery_desc">Байгаль, өрөө, хоол, event-ийн онцлох зургууд</p>
         </div>
         <div class="gallery-grid" id="gallery-preview"></div>
         <div class="text-center mt-8">
-          <a href="gallery.html" class="btn btn-light">Бүх зураг үзэх</a>
+          <a href="gallery.html" class="btn btn-light" data-i18n="view_all_gallery">Бүх зураг үзэх</a>
         </div>
       </div>
     </section>
@@ -182,16 +177,16 @@
       <div class="container">
         <div class="grid grid-2" style="align-items:center">
           <div>
-            <span class="section-label">Байршил</span>
-            <h2 class="section-title">Тэрэлжид биднийг олоорой</h2>
-            <p>Улаанбаатараас 58 км зайд, Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд байрладаг. Замын хөдөлгөөн харьцангуй чөлөөтэй бөгөөд машинаар ойролцоогоор 1-1.5 цаг явна.</p>
+            <span class="section-label" data-i18n="location_title">Байршил</span>
+            <h2 class="section-title" data-i18n="location_find_title">Тэрэлжид биднийг олоорой</h2>
+            <p data-i18n="location_text">Улаанбаатараас 58 км зайд, Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд байрладаг. Замын хөдөлгөөн харьцангуй чөлөөтэй бөгөөд машинаар ойролцоогоор 1-1.5 цаг явна.</p>
             <div class="card mt-6" style="padding:1.5rem">
-              <p class="mb-2"><strong>Хаяг:</strong> <span id="location-address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
-              <p class="mb-0"><strong>Улаанбаатараас:</strong> 58 км</p>
+              <p class="mb-2"><strong data-i18n="address">Хаяг</strong>: <span id="location-address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
+              <p class="mb-0"><strong id="from-ub-label">Улаанбаатараас</strong>: 58 км</p>
             </div>
             <div class="mt-6 flex gap-4" style="flex-wrap:wrap">
-              <a href="https://maps.google.com/?q=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-primary">Google Maps дээр харах</a>
-              <a href="location.html" class="btn btn-secondary">Чиглэл авах</a>
+              <a href="https://maps.google.com/?q=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-primary" id="home-map-link">Google Maps дээр харах</a>
+              <a href="location.html" class="btn btn-secondary" data-i18n="directions">Чиглэл авах</a>
             </div>
           </div>
           <div class="map-embed">
@@ -217,6 +212,8 @@
   <script src="js/erxes-client.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
+      renderIntroFeatures();
+      renderHomeStaticText();
       renderHomeContent();
       const result = await loadErxesData();
       if (result.success && (result.roomCount || result.foodCount || result.packageCount)) {
@@ -224,8 +221,38 @@
       }
     });
 
+    function renderHomeStaticText() {
+      const lang = getLang();
+      document.getElementById('from-ub-label').textContent = lang === 'en' ? 'From Ulaanbaatar' : 'Улаанбаатараас';
+      document.getElementById('home-map-link').textContent = lang === 'en' ? 'View on Google Maps' : 'Google Maps дээр харах';
+    }
+
+    function renderIntroFeatures() {
+      const lang = getLang();
+      const features = {
+        mn: [
+          'Улаанбаатараас 58 км — ойрхон байршил',
+          'Гэр, модон байшин, хамтын өрөөний сонголт',
+          'Уламжлалт ба орчин үеийн хоолны цэс',
+          'Хурим, багийн бүтээлч ажил, гэр бүлийн баяр'
+        ],
+        en: [
+          'Only 58 km from Ulaanbaatar',
+          'Ger, wooden cabin, and shared room options',
+          'Traditional and modern dining menu',
+          'Weddings, team building, and family celebrations'
+        ]
+      };
+      document.getElementById('intro-features').innerHTML = (features[lang] || features.mn).map(f =>
+        `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`
+      ).join('');
+    }
+
     function renderHomeContent() {
       const data = getData();
+      const lang = getLang();
+      const detailText = lang === 'en' ? 'Details' : 'Дэлгэрэнгүй';
+      const events = lang === 'en' && data.eventsEn ? data.eventsEn : data.events;
 
       // Featured packages
       const featuredPackages = data.packages.filter(p => p.featured).slice(0, 3);
@@ -243,7 +270,7 @@
             </div>
             <div class="card-footer">
               <div><span class="price">${formatPrice(pkg.price)}</span> <span class="price-unit">/${pkg.priceUnit}</span></div>
-              <a href="package-detail.html?id=${pkg.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+              <a href="package-detail.html?id=${pkg.id}" class="btn btn-outline btn-sm">${detailText}</a>
             </div>
           </div>
         </article>
@@ -265,14 +292,14 @@
             </div>
             <div class="card-footer">
               <div><span class="price">${formatPrice(room.price)}</span> <span class="price-unit">/${room.priceUnit}</span></div>
-              <a href="room-detail.html?id=${room.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+              <a href="room-detail.html?id=${room.id}" class="btn btn-outline btn-sm">${detailText}</a>
             </div>
           </div>
         </article>
       `).join('');
 
       // Event cards
-      document.getElementById('event-cards').innerHTML = data.events.map(evt => `
+      document.getElementById('event-cards').innerHTML = events.map(evt => `
         <article class="card">
           <div class="card-image">
             <img src="${escapeHtml(evt.image)}" alt="${escapeHtml(evt.title)}">
@@ -283,19 +310,19 @@
             <ul class="feature-list" style="margin-bottom:1.25rem">
               ${evt.features.slice(0, 3).map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
             </ul>
-            <a href="events.html#${evt.category}" class="btn btn-primary btn-sm">Дэлгэрэнгүй</a>
+            <a href="events.html#${evt.category}" class="btn btn-primary btn-sm">${detailText}</a>
           </div>
         </article>
       `).join('');
 
       // Gallery preview (6 images)
-        const previewImages = [
-        { src: 'images/hero-nature.jpg', title: 'Монголын ногоон талбай' },
-        { src: 'images/mongolia-horse.jpg', title: 'Морьтон малчид' },
-        { src: 'images/mongolian-steppes.jpg', title: 'Өргөн тал нутаг' },
-        { src: 'images/terelj-steppe.jpg', title: 'Тэрэлжийн тал' },
-        { src: 'images/terelj-horse.jpg', title: 'Тэрэлжийн адуун сүрэг' },
-        { src: 'images/terelj-skies.jpg', title: 'Тэрэлжийн тэнгэр' }
+      const previewImages = [
+        { src: 'images/hero-nature.jpg', title: lang === 'en' ? 'Mongolian green steppe' : 'Монголын ногоон талбай' },
+        { src: 'images/mongolia-horse.jpg', title: lang === 'en' ? 'Horseback herders' : 'Морьтон малчид' },
+        { src: 'images/mongolian-steppes.jpg', title: lang === 'en' ? 'Wide open steppe' : 'Өргөн тал нутаг' },
+        { src: 'images/terelj-steppe.jpg', title: lang === 'en' ? 'Terelj valley' : 'Тэрэлжийн тал' },
+        { src: 'images/terelj-horse.jpg', title: lang === 'en' ? 'Terelj horses' : 'Тэрэлжийн адуун сүрэг' },
+        { src: 'images/terelj-skies.jpg', title: lang === 'en' ? 'Terelj skies' : 'Тэрэлжийн тэнгэр' }
       ];
       const layoutClasses = ['tall', 'wide', '', 'tall', '', 'wide'];
       document.getElementById('gallery-preview').innerHTML = previewImages.map((img, i) => `

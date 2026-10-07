@@ -194,6 +194,7 @@ function initAuthUI() {
         <div class="user-menu">
           <button class="user-menu-toggle">${escapeHtml(user.name)} ▾</button>
           <div class="user-dropdown">
+            <a href="profile.html" data-i18n="profile">Профайл</a>
             <a href="my-bookings.html" data-i18n="nav_my_bookings">Миний захиалгууд</a>
             <button class="logout-btn" data-i18n="logout">Гарах</button>
           </div>

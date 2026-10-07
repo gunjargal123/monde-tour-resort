@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Байршил</span>
-        <h1 class="page-header-title">Бид хаана байдаг вэ?</h1>
-        <p class="page-header-desc">Тэрэлж, Монгол — Улаанбаатараас 58 км</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="location_title">Байршил</span>
+        <h1 class="page-header-title" id="location-page-title">Бид хаана байдаг вэ?</h1>
+        <p class="page-header-desc" id="location-page-desc">Тэрэлж, Монгол — Улаанбаатараас 58 км</p>
       </div>
     </section>
 
@@ -31,25 +31,20 @@
       <div class="container">
         <div class="grid grid-2" style="align-items:start;gap:3rem">
           <div>
-            <span class="section-label">Хаяг</span>
-            <h2 class="section-title">Monde Tour амралтын газар</h2>
+            <span class="section-label" data-i18n="address">Хаяг</span>
+            <h2 class="section-title" id="location-name">Monde Tour амралтын газар</h2>
             <p id="location-desc">Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд, Монде тур жуулчны баазын байршилд бид байрладаг.</p>
             <div class="card mt-6" style="padding:1.5rem">
-              <p style="margin-bottom:0.75rem"><strong>📍 Хаяг:</strong> <span id="address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
-              <p style="margin-bottom:0.75rem"><strong>🚗 Улаанбаатараас:</strong> 58 км (ойролцоогоор 1-1.5 цаг)</p>
-              <p style="margin-bottom:0.75rem"><strong>🧭 Координат:</strong> 47.894370, 107.430995</p>
-              <p class="mb-0"><strong>📞 Утас:</strong> <a href="tel:+97699112233" id="phone-link">+976 9911 2233</a></p>
+              <p style="margin-bottom:0.75rem"><strong>📍 <span data-i18n="address">Хаяг</span>:</strong> <span id="address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
+              <p style="margin-bottom:0.75rem"><strong>🚗 <span id="from-ub-label">Улаанбаатараас</span>:</strong> 58 км (ойролцоогоор 1-1.5 цаг)</p>
+              <p style="margin-bottom:0.75rem"><strong>🧭 <span data-i18n="coordinates">Координат</span>:</strong> 47.894370, 107.430995</p>
+              <p class="mb-0"><strong>📞 <span data-i18n="phone">Утас</span>:</strong> <a href="tel:+97699112233" id="phone-link">+976 9911 2233</a></p>
             </div>
-            <h3 style="margin-top:2rem;margin-bottom:1rem">Хүрэх заавар</h3>
-            <ol class="feature-list" style="list-style:decimal;margin-left:1.25rem;gap:1rem">
-              <li style="display:list-item">Улаанбаатарын төвөөс хойш, Сүхбаатарын талбайгаас хөдлөнө.</li>
-              <li style="display:list-item">Хөвсгөлийн замаар (Чингисийн өргөн чөлөө) хойш явна.</li>
-              <li style="display:list-item">Тэрэлж чиглэлийн заагт эргэнэ.</li>
-              <li style="display:list-item">Монде Tour-ийн тэмдэгт хүрээлэгдсэн орцоор ороорой.</li>
-            </ol>
+            <h3 style="margin-top:2rem;margin-bottom:1rem" id="directions-title">Хүрэх заавар</h3>
+            <ol class="feature-list" style="list-style:decimal;margin-left:1.25rem;gap:1rem" id="directions-list"></ol>
             <div class="flex gap-4 mt-6" style="flex-wrap:wrap">
               <a href="https://maps.google.com/?q=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-primary" id="map-link">Google Maps дээр харах</a>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-secondary">Чиглэл авах</a>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-secondary" data-i18n="directions">Чиглэл авах</a>
             </div>
           </div>
           <div class="map-embed">
@@ -68,10 +63,60 @@
     document.addEventListener('DOMContentLoaded', () => {
       const data = getData();
       const s = data.settings;
+      const lang = getLang();
+
       document.getElementById('address').textContent = s.address;
       document.getElementById('phone-link').textContent = s.phone;
       document.getElementById('phone-link').href = 'tel:' + s.phone.replace(/\s/g, '');
       document.getElementById('map-link').href = s.mapLink;
+
+      const texts = {
+        mn: {
+          pageTitle: 'Бид хаана байдаг вэ?',
+          pageDesc: 'Тэрэлж, Монгол — Улаанбаатараас 58 км',
+          name: 'Monde Tour амралтын газар',
+          desc: 'Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд, Монде тур жуулчны баазын байршилд бид байрладаг.',
+          fromUb: 'Улаанбаатараас',
+          directionsTitle: 'Хүрэх заавар',
+          steps: [
+            'Улаанбаатарын төвөөс хойш, Сүхбаатарын талбайгаас хөдлөнө.',
+            'Хөвсгөлийн замаар (Чингисийн өргөн чөлөө) хойш явна.',
+            'Тэрэлж чиглэлийн заагт эргэнэ.',
+            'Монде Tour-ийн тэмдэгт хүрээлэгдсэн орцоор ороорой.'
+          ],
+          mapLinkText: 'Google Maps дээр харах'
+        },
+        en: {
+          pageTitle: 'Where to Find Us',
+          pageDesc: 'Terelj, Mongolia — 58 km from Ulaanbaatar',
+          name: 'Monde Tour Resort',
+          desc: 'We are located in the scenic Terelj valley, at the Monde Tour tourist camp site.',
+          fromUb: 'From Ulaanbaatar',
+          directionsTitle: 'Directions',
+          steps: [
+            'Head north from central Ulaanbaatar, starting at Sukhbaatar Square.',
+            'Take the Khövsgöl road (Chinggis Avenue) north.',
+            'Turn at the Terelj direction sign.',
+            'Enter through the marked Monde Tour entrance.'
+          ],
+          mapLinkText: 'View on Google Maps'
+        }
+      };
+
+      const t = texts[lang] || texts.mn;
+      document.getElementById('location-page-title').textContent = t.pageTitle;
+      document.getElementById('location-page-desc').textContent = t.pageDesc;
+      document.getElementById('location-name').textContent = t.name;
+      document.getElementById('location-desc').textContent = t.desc;
+      document.getElementById('from-ub-label').textContent = t.fromUb;
+      document.getElementById('directions-title').textContent = t.directionsTitle;
+      document.getElementById('map-link').textContent = t.mapLinkText;
+
+      document.getElementById('directions-list').innerHTML = t.steps.map(step =>
+        `<li style="display:list-item">${escapeHtml(step)}</li>`
+      ).join('');
+
+      applyTranslations();
     });
   </script>
 </body>

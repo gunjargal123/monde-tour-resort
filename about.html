@@ -21,9 +21,9 @@
       </div>
       <div class="page-header-overlay"></div>
       <div class="container page-header-content">
-        <span class="section-label" style="color:var(--green-300)">Танилцуулга</span>
-        <h1 class="page-header-title">Бидний тухай</h1>
-        <p class="page-header-desc">Байгальтай ойрхон, тав тухтай, зочломтгой амралтын газар</p>
+        <span class="section-label" style="color:var(--green-300)" data-i18n="intro_label">Танилцуулга</span>
+        <h1 class="page-header-title" id="about-page-title">Бидний тухай</h1>
+        <p class="page-header-desc" id="about-page-desc">Байгальтай ойрхон, тав тухтай, зочломтгой амралтын газар</p>
       </div>
     </section>
 
@@ -32,9 +32,9 @@
         <div class="grid grid-2 grid-feature" style="align-items:center">
           <div>
             <span class="section-label">Monde Tour</span>
-            <h2 class="section-title">Байгалийн дундах амралтын ертөнц</h2>
+            <h2 class="section-title" id="about-title">Байгалийн дундах амралтын ертөнц</h2>
             <p id="about-content">Monde Tour нь Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд орших тав тухтай амралтын газар юм. Бид байгальтай ойрхон, орчин үеийн үйлчилгээтэй, уламжлалт зочломтгой Монгол соёлыг хослуулсан амралтын туршлагыг санал болгодог.</p>
-            <p>Гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт тохирсон өрөө, багц, хоол, event үйлчилгээгээс сонгоорой.</p>
+            <p id="about-content-2">Гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт тохирсон өрөө, багц, хоол, event үйлчилгээгээс сонгоорой.</p>
           </div>
           <div>
             <img src="images/camp-gers.jpg" alt="Monde Tour-ийн гэрүүд" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%;height:auto">
@@ -46,35 +46,10 @@
     <section class="section section-sm" style="background:var(--beige-100)">
       <div class="container">
         <div class="section-header text-center" style="margin-left:auto;margin-right:auto">
-          <span class="section-label" style="justify-content:center">Үзэл баримтлал</span>
-          <h2 class="section-title">Бид яагаад онцгой вэ?</h2>
+          <span class="section-label" style="justify-content:center" data-i18n="philosophy_label">Үзэл баримтлал</span>
+          <h2 class="section-title" data-i18n="philosophy_title">Бид яагаад онцгой вэ?</h2>
         </div>
-        <div class="grid grid-3">
-          <div class="service-card" style="text-align:left">
-            <h3>🌿 Байгальтай ойрхон</h3>
-            <p class="mb-0">Хотоос холгүй ч, хотын чимээнээс ангид. Цэвэр агаар, уул, ой, өвс ногоонд өөрийгөө сэргээ.</p>
-          </div>
-          <div class="service-card" style="text-align:left">
-            <h3>🏕️ Уламжлал ба орчин үе</h3>
-            <p class="mb-0">Монгол гэрийн дулаахан орчин, орчин үеийн ариун цэврийн өрөө, Wifi, дулааны бүрэн хангамж.</p>
-          </div>
-          <div class="service-card" style="text-align:left">
-            <h3>🤝 Зочломтгой үйлчилгээ</h3>
-            <p class="mb-0">24 цагийн үйлчилгээ, туршлагатай ажилтнууд, хэрэглэгч төвтэй хандлага.</p>
-          </div>
-          <div class="service-card" style="text-align:left">
-            <h3>🍽️ Амттай хоол</h3>
-            <p class="mb-0">Уламжлалт хорхог, буузнаас эхлээд орчин үеийн хоолны цэс — бүгд шинэхэн, чанартай.</p>
-          </div>
-          <div class="service-card" style="text-align:left">
-            <h3>🎉 Event мэргэжилтнүүд</h3>
-            <p class="mb-0">Хурим, team building, гэр бүлийн баяр — хөтөлбөр, чимэглэл, хоол бүрэн хариуцна.</p>
-          </div>
-          <div class="service-card" style="text-align:left">
-            <h3>💚 Тогтвортой аялал</h3>
-            <p class="mb-0">Байгальд ээлтэй, орон нутгийн нийгэмлэгт дэмжлэг үзүүлдэг аяллын загвар.</p>
-          </div>
-        </div>
+        <div class="grid grid-3" id="philosophy-grid"></div>
       </div>
     </section>
 
@@ -85,15 +60,11 @@
             <img src="images/camp-entrance.jpg" alt="Monde Tour орц" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%;height:auto">
           </div>
           <div>
-            <span class="section-label">Байршил</span>
-            <h2 class="section-title">Тэрэлжид биднийг олоорой</h2>
-            <p>Улаанбаатар хотоос 58 км зайд, Тэрэлжийн үзэсгэлэнт хөндийд байрладаг. Замын хөдөлгөөн харьцангуй чөлөөтэй, машинаар 1-1.5 цаг явна.</p>
-            <ul class="feature-list mt-6">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Улаанбаатараас 58 км</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Хөвсгөлийн замаар гарч, Тэрэлж чиглэлд</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Хувийн машин, такси, эсвэл бидний зохион байгуулсан тээвэр</li>
-            </ul>
-            <a href="location.html" class="btn btn-outline mt-6">Чиглэл авах</a>
+            <span class="section-label" data-i18n="location_title">Байршил</span>
+            <h2 class="section-title" data-i18n="location_find_title">Тэрэлжид биднийг олоорой</h2>
+            <p data-i18n="location_text">Улаанбаатар хотоос 58 км зайд, Тэрэлжийн үзэсгэлэнт хөндийд байрладаг. Замын хөдөлгөөн харьцангуй чөлөөтэй, машинаар 1-1.5 цаг явна.</p>
+            <ul class="feature-list mt-6" id="location-features"></ul>
+            <a href="location.html" class="btn btn-outline mt-6" data-i18n="directions">Чиглэл авах</a>
           </div>
         </div>
       </div>
@@ -107,9 +78,74 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const data = getData();
-      if (data.pages && data.pages.about && data.pages.about.content) {
-        document.getElementById('about-content').textContent = data.pages.about.content;
+      const lang = getLang();
+
+      const texts = {
+        mn: {
+          pageTitle: 'Бидний тухай',
+          pageDesc: 'Байгальтай ойрхон, тав тухтай, зочломтгой амралтын газар',
+          title: 'Байгалийн дундах амралтын ертөнц',
+          content1: 'Monde Tour нь Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд орших тав тухтай амралтын газар юм. Бид байгальтай ойрхон, орчин үеийн үйлчилгээтэй, уламжлалт зочломтгой Монгол соёлыг хослуулсан амралтын туршлагыг санал болгодог.',
+          content2: 'Гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт тохирсон өрөө, багц, хоол, event үйлчилгээгээс сонгоорой.'
+        },
+        en: {
+          pageTitle: 'About Us',
+          pageDesc: 'A nature-close, comfortable, and welcoming resort',
+          title: 'A World of Relaxation in Nature',
+          content1: "Monde Tour is a comfortable resort set in the scenic landscape of Terelj. We offer a nature-close experience that combines modern service with traditional Mongolian hospitality.",
+          content2: 'Choose from rooms, packages, dining, and event services tailored for families, couples, friends, and corporate teams.'
+        }
+      };
+
+      const t = texts[lang] || texts.mn;
+      document.getElementById('about-page-title').textContent = t.pageTitle;
+      document.getElementById('about-page-desc').textContent = t.pageDesc;
+      document.getElementById('about-title').textContent = t.title;
+
+      if (data.pages && data.pages.about) {
+        const cms = lang === 'en' && data.pages.about.contentEn ? data.pages.about.contentEn : data.pages.about.content;
+        if (cms) document.getElementById('about-content').textContent = cms;
+      } else {
+        document.getElementById('about-content').textContent = t.content1;
       }
+      document.getElementById('about-content-2').textContent = t.content2;
+
+      const philosophy = {
+        mn: [
+          { title: '🌿 Байгальтай ойрхон', text: 'Хотоос холгүй ч, хотын чимээнээс ангид. Цэвэр агаар, уул, ой, өвс ногоонд өөрийгөө сэргээ.' },
+          { title: '🏕️ Уламжлал ба орчин үе', text: 'Монгол гэрийн дулаахан орчин, орчин үеийн ариун цэврийн өрөө, Wifi, дулааны бүрэн хангамж.' },
+          { title: '🤝 Зочломтгой үйлчилгээ', text: '24 цагийн үйлчилгээ, туршлагатай ажилтнууд, хэрэглэгч төвтэй хандлага.' },
+          { title: '🍽️ Амттай хоол', text: 'Уламжлалт хорхог, буузнаас эхлээд орчин үеийн хоолны цэс — бүгд шинэхэн, чанартай.' },
+          { title: '🎉 Event мэргэжилтнүүд', text: 'Хурим, team building, гэр бүлийн баяр — хөтөлбөр, чимэглэл, хоол бүрэн хариуцна.' },
+          { title: '💚 Тогтвортой аялал', text: 'Байгальд ээлтэй, орон нутгийн нийгэмлэгт дэмжлэг үзүүлдэг аяллын загвар.' }
+        ],
+        en: [
+          { title: '🌿 Close to Nature', text: 'Not far from the city, yet away from city noise. Refresh yourself in clean air, mountains, forests, and grasslands.' },
+          { title: '🏕️ Tradition & Modernity', text: 'The warmth of a Mongolian ger, modern bathrooms, Wi-Fi, and full heating.' },
+          { title: '🤝 Hospitable Service', text: '24-hour service, experienced staff, and a customer-first attitude.' },
+          { title: '🍽️ Delicious Food', text: 'From traditional khorkhog and buuz to a modern menu — everything is fresh and high-quality.' },
+          { title: '🎉 Event Experts', text: 'Weddings, team building, and family celebrations — we handle the program, décor, and food.' },
+          { title: '💚 Sustainable Travel', text: 'An eco-friendly travel model that supports the local community.' }
+        ]
+      };
+
+      document.getElementById('philosophy-grid').innerHTML = (philosophy[lang] || philosophy.mn).map(item => `
+        <div class="service-card" style="text-align:left">
+          <h3>${escapeHtml(item.title)}</h3>
+          <p class="mb-0">${escapeHtml(item.text)}</p>
+        </div>
+      `).join('');
+
+      const locationFeatures = {
+        mn: ['Улаанбаатараас 58 км', 'Хөвсгөлийн замаар гарч, Тэрэлж чиглэлд', 'Хувийн машин, такси, эсвэл бидний зохион байгуулсан тээвэр'],
+        en: ['58 km from Ulaanbaatar', 'Take the Khövsgöl road toward Terelj', 'Private car, taxi, or our arranged transfer']
+      };
+
+      document.getElementById('location-features').innerHTML = (locationFeatures[lang] || locationFeatures.mn).map(f => `
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>
+      `).join('');
+
+      applyTranslations();
     });
   </script>
 </body>
