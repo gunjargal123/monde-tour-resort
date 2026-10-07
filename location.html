@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Байршил — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын байршил, хаяг, Google Maps, чиглэл.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/camp-entrance.jpg" alt="Monde Tour байршил">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)">Байршил</span>
+        <h1 class="page-header-title">Бид хаана байдаг вэ?</h1>
+        <p class="page-header-desc">Тэрэлж, Монгол — Улаанбаатараас 58 км</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:start;gap:3rem">
+          <div>
+            <span class="section-label">Хаяг</span>
+            <h2 class="section-title">Monde Tour амралтын газар</h2>
+            <p id="location-desc">Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд, Монде тур жуулчны баазын байршилд бид байрладаг.</p>
+            <div class="card mt-6" style="padding:1.5rem">
+              <p style="margin-bottom:0.75rem"><strong>📍 Хаяг:</strong> <span id="address">Тэрэлж, Говьсүмбэр аймаг, Монгол</span></p>
+              <p style="margin-bottom:0.75rem"><strong>🚗 Улаанбаатараас:</strong> 58 км (ойролцоогоор 1-1.5 цаг)</p>
+              <p style="margin-bottom:0.75rem"><strong>🧭 Координат:</strong> 47.894370, 107.430995</p>
+              <p class="mb-0"><strong>📞 Утас:</strong> <a href="tel:+97699112233" id="phone-link">+976 9911 2233</a></p>
+            </div>
+            <h3 style="margin-top:2rem;margin-bottom:1rem">Хүрэх заавар</h3>
+            <ol class="feature-list" style="list-style:decimal;margin-left:1.25rem;gap:1rem">
+              <li style="display:list-item">Улаанбаатарын төвөөс хойш, Сүхбаатарын талбайгаас хөдлөнө.</li>
+              <li style="display:list-item">Хөвсгөлийн замаар (Чингисийн өргөн чөлөө) хойш явна.</li>
+              <li style="display:list-item">Тэрэлж чиглэлийн заагт эргэнэ.</li>
+              <li style="display:list-item">Монде Tour-ийн тэмдэгт хүрээлэгдсэн орцоор ороорой.</li>
+            </ol>
+            <div class="flex gap-4 mt-6" style="flex-wrap:wrap">
+              <a href="https://maps.google.com/?q=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-primary" id="map-link">Google Maps дээр харах</a>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=47.894370,107.430995" target="_blank" rel="noopener" class="btn btn-secondary">Чиглэл авах</a>
+            </div>
+          </div>
+          <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937604!2d107.430995!3d47.89437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDUzJzM5LjciTiAxMDfCsDI1JzUxLjYiRQ!5e0!3m2!1sen!2smn!4v1699999999999!5m2!1sen!2smn" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getData();
+      const s = data.settings;
+      document.getElementById('address').textContent = s.address;
+      document.getElementById('phone-link').textContent = s.phone;
+      document.getElementById('phone-link').href = 'tel:' + s.phone.replace(/\s/g, '');
+      document.getElementById('map-link').href = s.mapLink;
+    });
+  </script>
+</body>
+</html>

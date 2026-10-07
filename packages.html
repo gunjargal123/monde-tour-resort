@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Багцууд — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын гэр бүл, хос, байгууллагын team building, хуримын багцууд.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/camp-entrance.jpg" alt="Monde Tour багцууд">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)">Багцууд</span>
+        <h1 class="page-header-title">Амралтын багцууд</h1>
+        <p class="page-header-desc">Гэр бүл, хосууд, байгууллагад зориулсан бүрэн багц</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Багц сонгох</span>
+          <h2 class="section-title">Танд тохирсон багцыг олоорой</h2>
+          <p class="section-desc">Хүний тоо, төрөл, үнээр шүүж, хамгийн тохиромжтой багцаа сонгоорой.</p>
+        </div>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label class="filter-label">Багцын төрөл</label>
+            <select class="form-select" id="filter-type">
+              <option value="all">Бүгд</option>
+              <option value="family">Гэр бүлийн</option>
+              <option value="couple">Хосуудын</option>
+              <option value="corporate">Байгууллагын</option>
+              <option value="event">Event</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Хүний тоо</label>
+            <select class="form-select" id="filter-people">
+              <option value="all">Бүгд</option>
+              <option value="2">2 хүртэл</option>
+              <option value="5">5 хүртэл</option>
+              <option value="10">10+</option>
+              <option value="20">20+</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-3" id="packages-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getData();
+      const grid = document.getElementById('packages-grid');
+      const typeFilter = document.getElementById('filter-type');
+      const peopleFilter = document.getElementById('filter-people');
+
+      function parsePeople(peopleStr) {
+        const match = peopleStr.match(/(\d+)/g);
+        if (!match) return [0, 999];
+        const nums = match.map(Number);
+        if (nums.length === 1) return [nums[0], nums[0]];
+        return [nums[0], nums[1]];
+      }
+
+      function render() {
+        const type = typeFilter.value;
+        const people = peopleFilter.value;
+
+        let filtered = data.packages;
+
+        if (type !== 'all') {
+          filtered = filtered.filter(p => p.type === type);
+        }
+
+        if (people !== 'all') {
+          const pVal = parseInt(people);
+          filtered = filtered.filter(p => {
+            const [min, max] = parsePeople(p.people);
+            return min <= pVal && max >= pVal || max >= pVal;
+          });
+        }
+
+        grid.innerHTML = filtered.map(pkg => `
+          <article class="card">
+            <div class="card-image">
+              <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}">
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">${escapeHtml(pkg.name)}</h3>
+              <p class="card-text">${escapeHtml(pkg.shortDesc)}</p>
+              <div class="card-meta">
+                <span>👤 ${escapeHtml(pkg.people)}</span>
+                <span>⏱️ ${escapeHtml(pkg.duration)}</span>
+              </div>
+              <ul class="feature-list" style="margin-bottom:1.25rem;font-size:0.875rem">
+                ${pkg.includes.slice(0, 3).map(i => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(i)}</li>`).join('')}
+              </ul>
+              <div class="card-footer">
+                <div><span class="price">${formatPrice(pkg.price)}</span> <span class="price-unit">/${pkg.priceUnit}</span></div>
+                <a href="package-detail.html?id=${pkg.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      typeFilter.addEventListener('change', render);
+      peopleFilter.addEventListener('change', render);
+      render();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Өрөө — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын өрөөний сонголт: гэр, гэр бүлийн гэр, VIP байшин, хамтын өрөө.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/camp-gers.jpg" alt="Monde Tour өрөө">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)">Өрөө</span>
+        <h1 class="page-header-title">Өрөөний сонголт</h1>
+        <p class="page-header-desc">Байгаль дундах тав тухтай унтлагын өрөө</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Бүх өрөө</span>
+          <h2 class="section-title">Танд тохирсон өрөөг сонгоорой</h2>
+          <p class="section-desc">Гэр, гэр бүлийн гэр, VIP байшин, хамтын өрөө — бүгд цэвэрхэн, дулаахан, аюулгүй.</p>
+        </div>
+        <div class="grid grid-3" id="rooms-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getData();
+      const grid = document.getElementById('rooms-grid');
+      grid.innerHTML = data.rooms.map(room => `
+        <article class="card">
+          <div class="card-image">
+            <img src="${escapeHtml(room.images[0])}" alt="${escapeHtml(room.name)}">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${escapeHtml(room.name)}</h3>
+            <p class="card-text">${escapeHtml(room.shortDesc)}</p>
+            <div class="card-meta">
+              <span>👤 ${room.capacity} хүн</span>
+              <span>🛏️ ${escapeHtml(room.beds)}</span>
+            </div>
+            <ul class="feature-list" style="margin-bottom:1.25rem;font-size:0.875rem">
+              ${room.facilities.slice(0, 3).map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
+            </ul>
+            <div class="card-footer">
+              <div><span class="price">${formatPrice(room.price)}</span> <span class="price-unit">/${room.priceUnit}</span></div>
+              <a href="room-detail.html?id=${room.id}" class="btn btn-outline btn-sm">Дэлгэрэнгүй</a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

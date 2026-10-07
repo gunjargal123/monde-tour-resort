@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зургийн цомог — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын зургийн цомог: байгаль, өрөө, хоол, event-ийн зургууд.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/hero-bg.jpg" alt="Monde Tour зургийн цомог">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)">Зургийн цомог</span>
+        <h1 class="page-header-title">Дүр төрх</h1>
+        <p class="page-header-desc">Байгаль, өрөө, хоол, event-ийн онцлох зургууд</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="tabs" id="gallery-tabs"></div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="lightbox">
+    <button class="lightbox-close">✕</button>
+    <button class="lightbox-prev">‹</button>
+    <img src="" alt="">
+    <button class="lightbox-next">›</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getData();
+      const tabs = document.getElementById('gallery-tabs');
+      const grid = document.getElementById('gallery-grid');
+      const categories = [
+        { id: 'all', name: 'Бүгд' },
+        { id: 'resort', name: 'Амралтын газар' },
+        { id: 'nature', name: 'Байгаль' },
+        { id: 'rooms', name: 'Өрөө' },
+        { id: 'food', name: 'Хоол' },
+        { id: 'events', name: 'Event' },
+        { id: 'services', name: 'Үйлчилгээ' }
+      ];
+      let activeCategory = 'all';
+
+      function renderTabs() {
+        tabs.innerHTML = categories.map(cat => `
+          <button class="tab-btn ${cat.id === activeCategory ? 'active' : ''}" data-category="${cat.id}">${escapeHtml(cat.name)}</button>
+        `).join('');
+
+        tabs.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            activeCategory = btn.dataset.category;
+            renderTabs();
+            renderGrid();
+          });
+        });
+      }
+
+      function renderGrid() {
+        const items = activeCategory === 'all'
+          ? data.gallery
+          : data.gallery.filter(g => g.category === activeCategory);
+
+        const layoutPattern = ['tall', '', 'wide', 'tall', '', 'wide', '', 'tall'];
+        grid.innerHTML = items.map((img, i) => `
+          <div class="gallery-item ${layoutPattern[i % layoutPattern.length]}" data-src="${escapeHtml(img.src)}" data-title="${escapeHtml(img.title)}">
+            <img src="${escapeHtml(img.src)}" alt="${escapeHtml(img.title)}">
+            <div class="gallery-overlay"><span>${escapeHtml(img.title)}</span></div>
+          </div>
+        `).join('');
+
+        initLightbox();
+      }
+
+      renderTabs();
+      renderGrid();
+    });
+  </script>
+</body>
+</html>

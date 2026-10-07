@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Захиалга өгөх — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газарт өрөө, багц, event захиалга өгөх онлайн маягт.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/camp-overview.jpg" alt="Monde Tour захиалга">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)">Захиалга</span>
+        <h1 class="page-header-title">Захиалгын хүсэлт</h1>
+        <p class="page-header-desc">Мэдээллээ бөглөөд, бид тантай удахгүй холбогдоно</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:start;gap:3rem">
+          <div>
+            <span class="section-label">Маягт</span>
+            <h2 class="section-title">Захиалгын мэдээлэл</h2>
+            <p>Та доорх маягтыг бөглөж, өрөө, багц эсвэл event-ийн захиалгын хүсэлт илгээнэ үү. Манай ажилтан 24 цагийн дотор тантай холбогдож, дэлгэрэнгүй мэдээлэл өгнө.</p>
+            <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
+              <h3 style="margin-bottom:0.75rem;color:var(--green-800)">📞 Шууд холбогдох</h3>
+              <p class="mb-2">Яаралтай захиалга өгөх бол шууд утасдаж холбогдоорой.</p>
+              <a href="tel:+97699112233" id="booking-phone" class="btn btn-primary">+976 9911 2233</a>
+            </div>
+          </div>
+          <div>
+            <form class="booking-form" id="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Нэр <span class="required">*</span></label>
+                  <input type="text" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Утас <span class="required">*</span></label>
+                  <input type="tel" name="phone" class="form-input" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Ирэх өдөр <span class="required">*</span></label>
+                  <input type="date" name="arrivalDate" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Гарах өдөр / Хугацаа</label>
+                  <input type="date" name="departureDate" class="form-input">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Хүний тоо <span class="required">*</span></label>
+                  <input type="number" name="people" class="form-input" min="1" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Үйлчилгээний төрөл <span class="required">*</span></label>
+                  <select name="serviceType" class="form-select" required>
+                    <option value="">Сонгох</option>
+                    <option value="room">Өрөө захиалах</option>
+                    <option value="package">Багц захиалах</option>
+                    <option value="corporate">Байгууллагын event</option>
+                    <option value="wedding">Хурим</option>
+                    <option value="family">Гэр бүлийн баяр</option>
+                    <option value="other">Бусад</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group room-select-group hidden">
+                <label class="form-label">Өрөө сонгох</label>
+                <select name="room" class="form-select" id="room-select">
+                  <option value="">Сонгох</option>
+                </select>
+              </div>
+              <div class="form-group package-select-group hidden">
+                <label class="form-label">Багц сонгох</label>
+                <select name="package" class="form-select" id="package-select">
+                  <option value="">Сонгох</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Нэмэлт хүсэлт</label>
+                <textarea name="notes" class="form-textarea" placeholder="Тусгай хүсэлт, хоолны хязгаарлалт, тэмдэглэх зүйлс..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Захиалгын хүсэлт илгээх</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getData();
+      const s = data.settings;
+
+      document.getElementById('booking-phone').textContent = s.phone;
+      document.getElementById('booking-phone').href = 'tel:' + s.phone.replace(/\s/g, '');
+
+      const roomSelect = document.getElementById('room-select');
+      roomSelect.innerHTML = '<option value="">Сонгох</option>' + data.rooms.map(r =>
+        `<option value="${r.id}">${escapeHtml(r.name)} — ${formatPrice(r.price)}/${r.priceUnit}</option>`
+      ).join('');
+
+      const packageSelect = document.getElementById('package-select');
+      packageSelect.innerHTML = '<option value="">Сонгох</option>' + data.packages.map(p =>
+        `<option value="${p.id}">${escapeHtml(p.name)} — ${formatPrice(p.price)}/${p.priceUnit}</option>`
+      ).join('');
+
+      // Pre-fill from URL params
+      const params = new URLSearchParams(window.location.search);
+      const roomId = params.get('room');
+      const pkgId = params.get('package');
+      const service = params.get('service');
+      const serviceSelect = document.querySelector('[name="serviceType"]');
+
+      if (roomId) {
+        serviceSelect.value = 'room';
+        roomSelect.value = roomId;
+      } else if (pkgId) {
+        serviceSelect.value = 'package';
+        packageSelect.value = pkgId;
+      } else if (service) {
+        const map = { corporate: 'corporate', wedding: 'wedding', family: 'family' };
+        if (map[service]) serviceSelect.value = map[service];
+      }
+
+      // Trigger change to show/hide fields
+      serviceSelect.dispatchEvent(new Event('change'));
+    });
+  </script>
+</body>
+</html>

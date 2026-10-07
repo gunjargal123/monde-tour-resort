@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Өрөөний дэлгэрэнгүй — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын өрөөний дэлгэрэнгүй мэдээлэл, үнэ, тохижилт.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="section" style="padding-top:120px">
+      <div class="container">
+        <div id="room-detail"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="lightbox">
+    <button class="lightbox-close">✕</button>
+    <button class="lightbox-prev">‹</button>
+    <img src="" alt="">
+    <button class="lightbox-next">›</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const data = getData();
+      const room = data.rooms.find(r => r.id === id) || data.rooms[0];
+
+      document.title = `${room.name} — Monde Tour`;
+
+      const detail = document.getElementById('room-detail');
+      detail.innerHTML = `
+        <a href="rooms.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">← Бүх өрөө буцах</a>
+        <div class="grid grid-2" style="gap:3rem;align-items:start">
+          <div>
+            <div class="gallery-grid" id="room-gallery" style="grid-auto-rows:180px">
+              ${room.images.map((img, i) => `
+                <div class="gallery-item ${i === 0 ? 'wide' : ''}" data-src="${escapeHtml(img)}" data-title="${escapeHtml(room.name)}">
+                  <img src="${escapeHtml(img)}" alt="${escapeHtml(room.name)} ${i + 1}">
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div>
+            <span class="section-label">Өрөө</span>
+            <h1 style="font-size:2.5rem;margin-bottom:0.75rem">${escapeHtml(room.name)}</h1>
+            <p style="font-size:1.125rem">${escapeHtml(room.description)}</p>
+            <div class="card mt-6" style="padding:1.5rem">
+              <div class="grid grid-2" style="gap:1rem">
+                <div>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Багтаамж</p>
+                  <p style="font-weight:600;color:var(--neutral-800)">${room.capacity} хүн</p>
+                </div>
+                <div>
+                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">Ор</p>
+                  <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(room.beds)}</p>
+                </div>
+              </div>
+            </div>
+            <h3 style="margin-top:2rem;margin-bottom:1rem">Үндсэн тохижилт</h3>
+            <ul class="feature-list">
+              ${room.facilities.map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
+            </ul>
+            <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
+              <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:1rem">
+                <div>
+                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">Үнэ</p>
+                  <p style="font-size:1.75rem;font-weight:700;color:var(--green-700)">${formatPrice(room.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${room.priceUnit}</span></p>
+                </div>
+                <div class="flex gap-3" style="flex-wrap:wrap">
+                  <a href="booking.html?room=${room.id}" class="btn btn-primary">Захиалах</a>
+                  <a href="booking.html?room=${room.id}" class="btn btn-secondary">Захиалгын хүсэлт</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      initLightbox();
+    });
+  </script>
+</body>
+</html>
