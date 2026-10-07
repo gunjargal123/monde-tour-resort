@@ -15,8 +15,12 @@ const defaultData = {
     mapLink: "https://maps.google.com/?q=47.894370,107.430995",
     businessHours: "24 цагаар (24/7)",
     seoTitle: "Monde Tour — Тэрэлж дэх байгалийн амралтын газар",
-    seoDescription: "Monde Tour амралтын газар: гэр бааз, өрөө, хоол, багц, хурим, багийн бүтээлч ажил, гэр бүлийн баяр. Тэрэлж, Монгол."
+    seoDescription: "Monde Tour амралтын газар: гэр бааз, өрөө, хоол, багц, хурим, багийн бүтээлч ажил, гэр бүлийн баяр. Тэрэлж, Монгол.",
+    lang: "mn"
   },
+
+  users: [],
+  currentUser: null,
 
   rooms: [
     {
@@ -189,7 +193,7 @@ const defaultData = {
     { id: "g-3", category: "rooms", src: "images/camp-gers.jpg", title: "Монгол гэр" },
     { id: "g-4", category: "resort", src: "images/camp-entrance.jpg", title: "Орц, хаалга" },
     { id: "g-5", category: "food", src: "images/camp-overview.jpg", title: "Хоолны үйлчилгээ" },
-    { id: "g-6", category: "events", src: "images/camp-gers.jpg", title: "Event талбай" },
+    { id: "g-6", category: "events", src: "images/camp-gers.jpg", title: "Арга хэмжээний талбай" },
     { id: "g-7", category: "nature", src: "images/hero-bg.jpg", title: "Уул, ой" },
     { id: "g-8", category: "services", src: "images/camp-entrance.jpg", title: "Үйлчилгээний талбай" }
   ],
@@ -200,6 +204,87 @@ const defaultData = {
     about: {
       title: "Бидний тухай",
       content: "Monde Tour нь Тэрэлжийн байгалийн үзэсгэлэн бүрдэл дунд орших тав тухтай амралтын газар юм. Бид байгальтай ойрхон, орчин үеийн үйлчилгээтэй, уламжлалт зочломтгой Монгол соёлыг хослуулсан амралтын туршлагыг санал болгодог. Гэр бүл, хосууд, найз нөхөд, байгууллагын баг бүрт тохирсон өрөө, багц, хоол, event үйлчилгээгээс сонгоорой."
+    }
+  },
+
+  i18n: {
+    mn: {
+      nav_home: "Нүүр",
+      nav_about: "Бидний тухай",
+      nav_rooms: "Байрлах өрөө",
+      nav_food: "Хоолны үйлчилгээ",
+      nav_packages: "Багц",
+      nav_events: "Арга хэмжээ",
+      nav_gallery: "Зургийн цомог",
+      nav_contact: "Холбогдох",
+      nav_my_bookings: "Миний захиалгууд",
+      login: "Нэвтрэх",
+      logout: "Гарах",
+      register: "Бүртгүүлэх",
+      book_now: "Захиалга өгөх",
+      view_packages: "Багц үзэх",
+      learn_more: "Дэлгэрэнгүй",
+      book: "Захиалах",
+      contact_us: "Холбогдох",
+      phone: "Утас",
+      email: "Имэйл",
+      address: "Хаяг",
+      name: "Нэр",
+      password: "Нууц үг",
+      confirm_password: "Нууц үг давтах",
+      submit: "Илгээх",
+      booking_request: "Захиалгын хүсэлт",
+      my_bookings_title: "Миний захиалгууд",
+      no_bookings: "Одоогоор захиалга байхгүй.",
+      booking_saved: "Таны захиалгын хүсэлтийг хүлээн авлаа. Манай ажилтан тантай удахгүй холбогдоно.",
+      login_required: "Захиалга өгөхийн тулд эхлээд нэвтэрнэ үү.",
+      welcome: "Тавтай морил",
+      have_account: "Бүртгэлтэй юу? Нэвтрэх",
+      no_account: "Бүртгэлгүй юу? Бүртгүүлэх",
+      hero_tagline: "Байгальтай ойрхон, тав тухтай амралтыг танд",
+      service_rooms: "Байрлах өрөө",
+      service_food: "Хоолны үйлчилгээ",
+      service_packages: "Багц",
+      service_events: "Арга хэмжээ"
+    },
+    en: {
+      nav_home: "Home",
+      nav_about: "About",
+      nav_rooms: "Rooms",
+      nav_food: "Dining",
+      nav_packages: "Packages",
+      nav_events: "Events",
+      nav_gallery: "Gallery",
+      nav_contact: "Contact",
+      nav_my_bookings: "My Bookings",
+      login: "Log in",
+      logout: "Log out",
+      register: "Sign up",
+      book_now: "Book now",
+      view_packages: "View packages",
+      learn_more: "Details",
+      book: "Book",
+      contact_us: "Contact us",
+      phone: "Phone",
+      email: "Email",
+      address: "Address",
+      name: "Name",
+      password: "Password",
+      confirm_password: "Confirm password",
+      submit: "Submit",
+      booking_request: "Booking request",
+      my_bookings_title: "My bookings",
+      no_bookings: "No bookings yet.",
+      booking_saved: "Your booking request has been received. Our staff will contact you soon.",
+      login_required: "Please log in to make a booking.",
+      welcome: "Welcome",
+      have_account: "Already have an account? Log in",
+      no_account: "No account? Sign up",
+      hero_tagline: "Nature-close, comfortable retreat for you",
+      service_rooms: "Rooms",
+      service_food: "Dining",
+      service_packages: "Packages",
+      service_events: "Events"
     }
   }
 };

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Миний захиалгууд — Monde Tour</title>
+  <meta name="description" content="Monde Tour амралтын газрын захиалгын түүх.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="mobile-cta-placeholder"></div>
+
+  <main>
+    <section class="page-header">
+      <div class="page-header-bg">
+        <img src="images/camp-overview.jpg" alt="Monde Tour миний захиалгууд">
+      </div>
+      <div class="page-header-overlay"></div>
+      <div class="container page-header-content">
+        <span class="section-label" style="color:var(--green-300)" data-i18n="nav_my_bookings">Миний захиалгууд</span>
+        <h1 class="page-header-title" data-i18n="my_bookings_title">Миний захиалгууд</h1>
+        <p class="page-header-desc">Таны өмнө хийсэн захиалгын хүсэлтүүд</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div id="bookings-content"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      const container = document.getElementById('bookings-content');
+
+      if (!user) {
+        container.innerHTML = `
+          <div class="text-center" style="max-width:480px;margin:0 auto">
+            <h2 data-i18n="login">Нэвтрэх</h2>
+            <p data-i18n="login_required">Захиалга өгөхийн тулд эхлээд нэвтэрнэ үү.</p>
+            <button class="btn btn-primary btn-lg" onclick="openAuthModal('login')" data-i18n="login">Нэвтрэх</button>
+          </div>
+        `;
+        applyTranslations();
+        return;
+      }
+
+      const data = getData();
+      const userBookings = data.bookings.filter(b => b.userId === user.id);
+
+      if (userBookings.length === 0) {
+        container.innerHTML = `
+          <div class="text-center" style="max-width:480px;margin:0 auto">
+            <h2 data-i18n="my_bookings_title">Миний захиалгууд</h2>
+            <p data-i18n="no_bookings">Одоогоор захиалга байхгүй.</p>
+            <a href="booking.html" class="btn btn-primary" data-i18n="book_now">Захиалга өгөх</a>
+          </div>
+        `;
+        applyTranslations();
+        return;
+      }
+
+      container.innerHTML = `
+        <h2 class="section-title" data-i18n="my_bookings_title">Миний захиалгууд</h2>
+        <div class="grid grid-1" style="gap:1rem">
+          ${userBookings.map(b => `
+            <div class="card" style="padding:1.5rem">
+              <div class="flex justify-between items-start" style="flex-wrap:wrap;gap:1rem">
+                <div>
+                  <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-500)">${new Date(b.createdAt).toLocaleDateString('mn-MN')}</p>
+                  <h3 class="card-title" style="margin-bottom:0.25rem">${serviceLabel(b.serviceType)}</h3>
+                  <p class="card-text mb-0">${escapeHtml(b.name)} · ${escapeHtml(b.phone)} · ${b.people} хүн</p>
+                  ${b.arrivalDate ? `<p class="card-text mb-0">Ирэх: ${b.arrivalDate}${b.departureDate ? ' — Гарах: ' + b.departureDate : ''}</p>` : ''}
+                </div>
+                <span class="status-badge status-${b.status}">${statusLabel(b.status)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      applyTranslations();
+    });
+
+    function serviceLabel(type) {
+      const labels = {
+        room: 'Өрөө', package: 'Багц', corporate: 'Байгууллагын event',
+        wedding: 'Хурим', family: 'Гэр бүлийн баяр', other: 'Бусад'
+      };
+      return labels[type] || type;
+    }
+
+    function statusLabel(status) {
+      const labels = { new: 'Шинэ', contacted: 'Холбогдсон', confirmed: 'Баталгаажсан', cancelled: 'Цуцлагдсан' };
+      return labels[status] || status;
+    }
+  </script>
+</body>
+</html>
