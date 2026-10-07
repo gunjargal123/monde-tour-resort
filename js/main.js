@@ -143,8 +143,9 @@ function initLanguage() {
 
 function updateLangSwitcher() {
   const lang = getLang();
+  const target = lang === 'mn' ? 'EN' : 'MN';
   document.querySelectorAll('.lang-switch').forEach(sw => {
-    sw.textContent = lang.toUpperCase();
+    sw.textContent = target;
   });
 }
 
@@ -512,7 +513,7 @@ function renderHeader() {
           <a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Зургийн цомог</a>
         </nav>
         <div class="header-actions">
-          <button class="lang-switch" onclick="toggleLanguage()" title="Switch language">${lang.toUpperCase()}</button>
+          <button class="lang-switch" onclick="toggleLanguage()" title="Switch language">${lang === 'mn' ? 'EN' : 'MN'}</button>
           <div id="header-auth-action"></div>
           <button class="mobile-menu-btn" data-i18n-aria="menu_open" aria-label="Цэс нээх">
             <span></span><span></span><span></span>

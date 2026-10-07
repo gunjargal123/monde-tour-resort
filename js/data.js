@@ -720,7 +720,19 @@ function initData() {
 
 function getData() {
   initData();
-  return JSON.parse(localStorage.getItem('mondeTourData'));
+  const stored = JSON.parse(localStorage.getItem('mondeTourData'));
+
+  // Merge any new i18n keys from defaultData so updates reach existing users
+  ['mn', 'en'].forEach(lang => {
+    if (!stored.i18n[lang]) stored.i18n[lang] = {};
+    Object.keys(defaultData.i18n[lang]).forEach(key => {
+      if (stored.i18n[lang][key] === undefined) {
+        stored.i18n[lang][key] = defaultData.i18n[lang][key];
+      }
+    });
+  });
+
+  return stored;
 }
 
 function saveData(data) {
