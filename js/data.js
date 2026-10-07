@@ -188,14 +188,14 @@ const defaultData = {
   ],
 
   gallery: [
-    { id: "g-1", category: "resort", src: "images/camp-overview.jpg", title: "Баазын бүрэн харагдац" },
-    { id: "g-2", category: "nature", src: "images/hero-bg.jpg", title: "Тэрэлжийн байгаль" },
-    { id: "g-3", category: "rooms", src: "images/camp-gers.jpg", title: "Монгол гэр" },
-    { id: "g-4", category: "resort", src: "images/camp-entrance.jpg", title: "Орц, хаалга" },
-    { id: "g-5", category: "food", src: "images/camp-overview.jpg", title: "Хоолны үйлчилгээ" },
-    { id: "g-6", category: "events", src: "images/camp-gers.jpg", title: "Арга хэмжээний талбай" },
-    { id: "g-7", category: "nature", src: "images/hero-bg.jpg", title: "Уул, ой" },
-    { id: "g-8", category: "services", src: "images/camp-entrance.jpg", title: "Үйлчилгээний талбай" }
+    { id: "g-1", category: "nature", src: "images/hero-nature.jpg", title: "Монголын ногоон талбай" },
+    { id: "g-2", category: "nature", src: "images/mongolia-horse.jpg", title: "Морьтон малчид" },
+    { id: "g-3", category: "nature", src: "images/mongolian-steppes.jpg", title: "Өргөн тал нутаг" },
+    { id: "g-4", category: "nature", src: "images/terelj-steppe.jpg", title: "Тэрэлжийн тал" },
+    { id: "g-5", category: "nature", src: "images/terelj-horse.jpg", title: "Тэрэлжийн адуун сүрэг" },
+    { id: "g-6", category: "nature", src: "images/terelj-skies.jpg", title: "Тэрэлжийн тэнгэр" },
+    { id: "g-7", category: "rooms", src: "images/camp-gers.jpg", title: "Монгол гэр" },
+    { id: "g-8", category: "resort", src: "images/camp-overview.jpg", title: "Баазын бүрэн харагдац" }
   ],
 
   bookings: [],

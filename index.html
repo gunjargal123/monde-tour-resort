@@ -22,7 +22,7 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-bg">
-        <img src="images/hero-bg.jpg" alt="Monde Tour амралтын газар, Тэрэлж">
+        <img src="images/hero-nature.jpg" alt="Монголын байгалийн үзэсгэлэн, Тэрэлж">
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content animate-fade-in-up">
@@ -73,7 +73,7 @@
             <a href="about.html" class="btn btn-outline mt-6">Дэлгэрэнгүй</a>
           </div>
           <div>
-            <img src="images/camp-overview.jpg" alt="Monde Tour амралтын газрын бүрэн харагдац" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl)">
+            <img src="images/mongolian-steppes.jpg" alt="Монголын өргөн тал нутаг" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl)">
           </div>
         </div>
       </div>
@@ -289,7 +289,14 @@
       `).join('');
 
       // Gallery preview (6 images)
-      const previewImages = data.gallery.slice(0, 6);
+        const previewImages = [
+        { src: 'images/hero-nature.jpg', title: 'Монголын ногоон талбай' },
+        { src: 'images/mongolia-horse.jpg', title: 'Морьтон малчид' },
+        { src: 'images/mongolian-steppes.jpg', title: 'Өргөн тал нутаг' },
+        { src: 'images/terelj-steppe.jpg', title: 'Тэрэлжийн тал' },
+        { src: 'images/terelj-horse.jpg', title: 'Тэрэлжийн адуун сүрэг' },
+        { src: 'images/terelj-skies.jpg', title: 'Тэрэлжийн тэнгэр' }
+      ];
       const layoutClasses = ['tall', 'wide', '', 'tall', '', 'wide'];
       document.getElementById('gallery-preview').innerHTML = previewImages.map((img, i) => `
         <div class="gallery-item ${layoutClasses[i] || ''}" data-src="${escapeHtml(img.src)}" data-title="${escapeHtml(img.title)}">
