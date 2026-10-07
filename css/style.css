@@ -176,10 +176,16 @@ p {
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-feature { grid-template-columns: 1fr 1.35fr; }
+.grid-feature-reverse { grid-template-columns: 1.35fr 1fr; }
 
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .grid-feature, .grid-feature-reverse { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
