@@ -214,9 +214,14 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/erxes-client.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       renderHomeContent();
+      const result = await loadErxesData();
+      if (result.success && (result.roomCount || result.foodCount || result.packageCount)) {
+        renderHomeContent();
+      }
     });
 
     function renderHomeContent() {

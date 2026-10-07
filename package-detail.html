@@ -26,8 +26,10 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/erxes-client.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadErxesData();
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const data = getData();

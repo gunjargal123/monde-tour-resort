@@ -67,8 +67,9 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/erxes-client.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function renderPackages() {
       const data = getData();
       const grid = document.getElementById('packages-grid');
       const typeFilter = document.getElementById('filter-type');
@@ -124,9 +125,19 @@
         `).join('');
       }
 
+      typeFilter.removeEventListener('change', render);
+      peopleFilter.removeEventListener('change', render);
       typeFilter.addEventListener('change', render);
       peopleFilter.addEventListener('change', render);
       render();
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      renderPackages();
+      const result = await loadErxesData();
+      if (result.success && result.packageCount) {
+        renderPackages();
+      }
     });
   </script>
 </body>
