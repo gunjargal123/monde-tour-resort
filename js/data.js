@@ -14,7 +14,7 @@ const defaultData = {
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937604!2d107.430995!3d47.89437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDUzJzM5LjciTiAxMDfCsDI1JzUxLjYiRQ!5e0!3m2!1sen!2smn!4v1699999999999!5m2!1sen!2smn",
     mapLink: "https://maps.google.com/?q=47.894370,107.430995",
     businessHours: "24 цагаар (24/7)",
-    erxesClientPortalId: "",
+    erxesClientPortalId: "nsFQJ0ZOf9i6dyO2T6nTL",
     seoTitle: "Monde Tour — Тэрэлж дэх байгалийн амралтын газар",
     seoDescription: "Monde Tour амралтын газар: гэр бааз, өрөө, хоол, багц, хурим, багийн бүтээлч ажил, гэр бүлийн баяр. Тэрэлж, Монгол.",
     lang: "mn"

@@ -109,7 +109,7 @@
       document.getElementById('location-page-title').textContent = t.pageTitle;
       document.getElementById('location-page-desc').textContent = t.pageDesc;
       document.getElementById('location-name').textContent = cmsLocation?.title || t.name;
-      document.getElementById('location-desc').textContent = cmsLocation?.content || t.desc;
+      document.getElementById('location-desc').innerHTML = cmsLocation?.content || t.desc;
       document.getElementById('from-ub-label').textContent = t.fromUb;
       document.getElementById('directions-title').textContent = t.directionsTitle;
       document.getElementById('map-link').textContent = t.mapLinkText;

@@ -42,9 +42,10 @@
 
       // Merge Erxes CMS content for events if available
       events = events.map(evt => {
-        const cms = data.cms?.[evt.category];
+        const cmsKey = lang === 'en' && data.cms?.[evt.category + 'En'] ? evt.category + 'En' : evt.category;
+        const cms = data.cms?.[cmsKey];
         if (cms && cms.content) {
-          return { ...evt, title: cms.title || evt.title, description: cms.content };
+          return { ...evt, title: cms.title || evt.title, description: cms.content, _source: 'erxes' };
         }
         return evt;
       });
@@ -86,7 +87,7 @@
               <div>
                 <span class="section-label">${labels[evt.category][lang] || labels[evt.category].mn}</span>
                 <h2 class="section-title">${escapeHtml(evt.title)}</h2>
-                <p>${escapeHtml(evt.description)}</p>
+                <p>${evt._source === 'erxes' ? evt.description : escapeHtml(evt.description)}</p>
                 <ul class="feature-list mt-6">
                   ${evt.features.map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
                 </ul>

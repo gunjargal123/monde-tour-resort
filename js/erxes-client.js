@@ -181,18 +181,17 @@ async function loadErxesCmsData() {
       data.cms[key] = {
         id: post._id,
         title: post.title,
-        content: stripHtml(post.content || ''),
+        content: (post.content || '').trim(),
         category: categoryName,
         _source: 'erxes'
       };
 
       // Also save English content if post title/content look English
       if (/^[A-Za-z\s&\-]+$/.test(post.title) && key !== 'about' && key !== 'location') {
-        if (!data.cms[key + 'En']) data.cms[key + 'En'] = {};
         data.cms[key + 'En'] = {
           id: post._id,
           title: post.title,
-          content: stripHtml(post.content || ''),
+          content: (post.content || '').trim(),
           category: categoryName,
           _source: 'erxes'
         };
@@ -205,11 +204,6 @@ async function loadErxesCmsData() {
     console.error('loadErxesCmsData error:', err);
     return { success: false, error: err.message };
   }
-}
-
-function stripHtml(html) {
-  if (!html) return '';
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 // Load Erxes data and merge with local data

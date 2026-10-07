@@ -104,7 +104,7 @@
 
       const cmsAbout = lang === 'en' && data.cms?.aboutEn ? data.cms.aboutEn : data.cms?.about;
       if (cmsAbout && cmsAbout.content) {
-        document.getElementById('about-content').textContent = cmsAbout.content;
+        document.getElementById('about-content').innerHTML = cmsAbout.content;
         if (cmsAbout.title) document.getElementById('about-title').textContent = cmsAbout.title;
       } else if (data.pages && data.pages.about) {
         const cms = lang === 'en' && data.pages.about.contentEn ? data.pages.about.contentEn : data.pages.about.content;
