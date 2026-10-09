@@ -546,7 +546,7 @@ p {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--white);
+  color: var(--green-300);
   margin-bottom: 1.25rem;
 }
 
