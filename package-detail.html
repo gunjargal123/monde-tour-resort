@@ -49,41 +49,47 @@
 
       const detail = document.getElementById('package-detail');
       detail.innerHTML = `
-        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">${backText}</a>
-        <div class="grid grid-2" style="gap:3rem;align-items:start">
+        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">${backText}</a>
+        <div style="position:relative;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xl);margin-bottom:3rem">
+          <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}" style="width:100%;height:clamp(300px,45vw,540px);object-fit:cover;display:block">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,60,40,0.55) 0%,transparent 45%)"></div>
+          <div style="position:absolute;left:2rem;bottom:1.75rem;color:#fff">
+            <span class="section-label" style="color:var(--green-300);margin-bottom:0.25rem">${packageLabel}</span>
+            <h1 style="font-size:clamp(2rem,4vw,3rem);margin:0;color:#fff">${escapeHtml(pkg.name)}</h1>
+          </div>
+        </div>
+        <div class="grid grid-feature" style="gap:3rem;align-items:start">
           <div>
-            <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%">
+            <p style="font-size:1.125rem;line-height:1.8;color:var(--neutral-600)">${escapeHtml(pkg.description)}</p>
+            <h3 style="margin-top:2.5rem;margin-bottom:1rem">${includesLabel}</h3>
+            <div class="grid grid-2" style="gap:0.75rem">
+              ${pkg.includes.map(i => `
+                <div style="display:flex;align-items:center;gap:0.75rem;background:var(--beige-100);padding:0.875rem 1rem;border-radius:var(--radius-lg)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span style="font-size:0.9375rem;color:var(--neutral-800)">${escapeHtml(i)}</span>
+                </div>
+              `).join('')}
+            </div>
           </div>
           <div>
-            <span class="section-label">${packageLabel}</span>
-            <h1 style="font-size:2.5rem;margin-bottom:0.75rem">${escapeHtml(pkg.name)}</h1>
-            <p style="font-size:1.125rem">${escapeHtml(pkg.description)}</p>
-            <div class="card mt-6" style="padding:1.5rem">
-              <div class="grid grid-2" style="gap:1rem">
-                <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${peopleLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(pkg.people)}</p>
+            <div class="card" style="padding:1.75rem;position:sticky;top:110px">
+              <div class="grid grid-2" style="gap:1.25rem;margin-bottom:1.5rem">
+                <div style="background:var(--beige-100);border-radius:var(--radius-lg);padding:1rem">
+                  <p class="mb-1" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${peopleLabel}</p>
+                  <p style="font-weight:600;color:var(--neutral-800);margin:0">👥 ${escapeHtml(pkg.people)}</p>
                 </div>
-                <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${durationLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(pkg.duration)}</p>
+                <div style="background:var(--beige-100);border-radius:var(--radius-lg);padding:1rem">
+                  <p class="mb-1" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${durationLabel}</p>
+                  <p style="font-weight:600;color:var(--neutral-800);margin:0">⏱️ ${escapeHtml(pkg.duration)}</p>
                 </div>
               </div>
-            </div>
-            <h3 style="margin-top:2rem;margin-bottom:1rem">${includesLabel}</h3>
-            <ul class="feature-list">
-              ${pkg.includes.map(i => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(i)}</li>`).join('')}
-            </ul>
-            <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
-              <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:1rem">
-                <div>
-                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
-                  <p style="font-size:1.75rem;font-weight:700;color:var(--green-700)">${formatPrice(pkg.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${pkg.priceUnit}</span></p>
-                </div>
-                <div class="flex gap-3" style="flex-wrap:wrap">
-                  <a href="booking.html?package=${pkg.id}" class="btn btn-primary">${bookText}</a>
-                  <a href="booking.html?package=${pkg.id}" class="btn btn-secondary">${requestText}</a>
-                </div>
+              <div style="border-top:1px solid var(--neutral-200);padding-top:1.25rem;margin-bottom:1.5rem">
+                <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
+                <p style="font-size:2rem;font-weight:700;color:var(--green-700);margin:0;line-height:1.1">${formatPrice(pkg.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${pkg.priceUnit}</span></p>
+              </div>
+              <div class="flex" style="flex-direction:column;gap:0.75rem">
+                <a href="booking.html?package=${pkg.id}" class="btn btn-primary btn-lg" style="width:100%">${bookText}</a>
+                <a href="booking.html?package=${pkg.id}" class="btn btn-secondary" style="width:100%">${requestText}</a>
               </div>
             </div>
           </div>
