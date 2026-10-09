@@ -601,11 +601,11 @@ function renderFooter() {
           </div>
           <div>
             <h4 class="footer-title" data-i18n="nav_contact">Холбогдох</h4>
-            <div class="footer-contact">
-              <a href="tel:${s.phone.replace(/\s/g, '')}">📞 ${escapeHtml(s.phone)}</a>
-              ${s.phone2 ? `<a href="tel:${s.phone2.replace(/\s/g, '')}">📞 ${escapeHtml(s.phone2)}</a>` : ''}
-              <a href="mailto:${escapeHtml(s.email)}">✉️ ${escapeHtml(s.email)}</a>
-              <a href="location.html">📍 ${escapeHtml(s.address)}</a>
+            <div class="footer-contact" style="flex-direction:column;align-items:flex-start;gap:0.75rem">
+              <p style="margin:0;color:var(--neutral-400)">${t('phone')}: <a href="tel:${s.phone.replace(/\s/g, '')}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.phone)}</a>${s.phone2 ? ` · <a href="tel:${s.phone2.replace(/\s/g, '')}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.phone2)}</a>` : ''}</p>
+              <p style="margin:0;color:var(--neutral-400)">${t('email')}: <a href="mailto:${escapeHtml(s.email)}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.email)}</a></p>
+              <p style="margin:0;color:var(--neutral-400)">${t('opening_hours')}: <strong style="color:var(--white)">${escapeHtml(s.businessHours)}</strong></p>
+              <p style="margin:0;color:var(--neutral-400)">${t('address')}: <strong style="color:var(--white)">${escapeHtml(s.address)}</strong></p>
             </div>
           </div>
         </div>
