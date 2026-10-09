@@ -279,7 +279,7 @@ p {
 
 .card-image {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
@@ -763,11 +763,11 @@ p {
 /* ─── Page header ─── */
 .page-header {
   position: relative;
-  min-height: 50vh;
+  min-height: 36vh;
   display: flex;
   align-items: center;
-  padding-top: 120px;
-  padding-bottom: 4rem;
+  padding-top: 110px;
+  padding-bottom: 3rem;
   color: var(--white);
   overflow: hidden;
 }
@@ -782,6 +782,8 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(2px) brightness(0.9);
+  transform: scale(1.05);
 }
 
 .page-header-overlay {
@@ -790,25 +792,28 @@ p {
   z-index: -1;
   background: linear-gradient(
     to bottom,
-    rgba(26, 60, 40, 0.45) 0%,
-    rgba(26, 60, 40, 0.6) 100%
+    rgba(26, 60, 40, 0.35) 0%,
+    rgba(26, 60, 40, 0.65) 100%
   );
 }
 
 .page-header-content {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .page-header-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   color: var(--white);
   margin-bottom: 1rem;
 }
 
 .page-header-desc {
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -952,7 +957,7 @@ p {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 240px;
+  grid-auto-rows: auto;
   gap: 1rem;
 }
 
@@ -961,6 +966,7 @@ p {
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
+  aspect-ratio: 16 / 9;
 }
 
 .gallery-item img {
@@ -975,11 +981,11 @@ p {
 }
 
 .gallery-item.tall {
-  grid-row: span 2;
+  grid-row: auto;
 }
 
 .gallery-item.wide {
-  grid-column: span 2;
+  grid-column: auto;
 }
 
 .gallery-overlay {
@@ -1005,19 +1011,14 @@ p {
 @media (max-width: 1024px) {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 200px;
+    grid-auto-rows: auto;
   }
 }
 
 @media (max-width: 640px) {
   .gallery-grid {
     grid-template-columns: 1fr;
-    grid-auto-rows: 240px;
-  }
-  .gallery-item.wide,
-  .gallery-item.tall {
-    grid-column: auto;
-    grid-row: auto;
+    grid-auto-rows: auto;
   }
 }
 
