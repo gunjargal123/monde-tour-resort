@@ -110,7 +110,8 @@
       renderItems();
     }
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    function renderFoodIntro() {
+      const data = getData();
       const lang = getLang();
       const intro = {
         mn: {
@@ -133,10 +134,14 @@
       document.getElementById('food-title').textContent = cmsRestaurant?.title || t.title;
       document.getElementById('food-text1').innerHTML = cmsRestaurant?.content || t.text1;
       document.getElementById('food-text2').textContent = t.text2;
+    }
 
+    document.addEventListener('DOMContentLoaded', async () => {
+      renderFoodIntro();
       renderMenu();
       const result = await loadErxesData();
-      if (result.success && result.foodCount) {
+      if (result.success) {
+        renderFoodIntro();
         renderMenu();
       }
     });

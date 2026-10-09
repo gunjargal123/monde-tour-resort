@@ -75,8 +75,14 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/erxes-client.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      renderAbout();
+      loadErxesData().then(() => renderAbout());
+    });
+
+    function renderAbout() {
       const data = getData();
       const lang = getLang();
 
@@ -150,7 +156,7 @@
       `).join('');
 
       applyTranslations();
-    });
+    }
   </script>
 </body>
 </html>

@@ -209,11 +209,13 @@ async function loadErxesCmsData() {
 // Load Erxes data and merge with local data
 async function loadErxesData() {
   try {
-    const [categories, products] = await Promise.all([
+    const [categories, products, cmsResult] = await Promise.all([
       fetchErxesCategories(),
-      fetchErxesProducts()
+      fetchErxesProducts(),
+      loadErxesCmsData()
     ]);
 
+    // Re-read data because loadErxesCmsData already saved CMS content
     const data = getData();
 
     // Map category codes
@@ -236,9 +238,6 @@ async function loadErxesData() {
     if (packageProducts.length > 0) {
       data.packages = packageProducts.map(mapErxesProductToPackage);
     }
-
-    // Load CMS posts in parallel
-    const cmsResult = await loadErxesCmsData();
 
     saveData(data);
     return {

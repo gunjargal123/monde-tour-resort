@@ -34,8 +34,14 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/erxes-client.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      renderEvents();
+      loadErxesData().then(() => renderEvents());
+    });
+
+    function renderEvents() {
       const data = getData();
       const lang = getLang();
       let events = lang === 'en' && data.eventsEn ? data.eventsEn : data.events;
@@ -102,7 +108,7 @@
           </div>
         </section>
       `).join('');
-    });
+    }
   </script>
 </body>
 </html>
