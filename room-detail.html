@@ -10,11 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .rd-gallery { display: grid; grid-template-columns: 1fr 2.2fr; gap: 1rem; }
-    .rd-thumb { position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; }
-    .rd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; opacity: .75; }
-    .rd-thumb:hover img { transform: scale(1.04); opacity: 1; }
-    .rd-thumb::after { content: '‹'; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--neutral-800); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); }
+    .rd-gallery { display: block; }
+    .rd-thumb { display: none; }
     .rd-main { position: relative; border-radius: var(--radius-lg); overflow: hidden; }
     .rd-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .rd-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); color: var(--neutral-800); font-size: 1.375rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); z-index: 2; }
@@ -108,10 +105,7 @@
 
         <div class="grid" style="grid-template-columns:1fr 340px;gap:2.5rem;align-items:start" id="rd-layout">
           <div>
-            <div class="rd-gallery" style="height:clamp(280px,38vw,440px)">
-              <div class="rd-thumb" onclick="rdPrev()">
-                <img id="rd-thumb-img" src="" alt="">
-              </div>
+            <div class="rd-gallery" style="height:clamp(300px,42vw,520px)">
               <div class="rd-main">
                 <img id="rd-main-img" src="" alt="">
                 <button class="rd-nav-btn" style="left:1rem" onclick="rdPrev()">‹</button>
@@ -160,11 +154,9 @@
 
     function renderGallery() {
       const main = document.getElementById('rd-main-img');
-      const thumb = document.getElementById('rd-thumb-img');
       const dots = document.getElementById('rd-dots');
       if (!main) return;
       main.src = rdImages[rdIndex];
-      if (thumb) thumb.src = rdImages[(rdIndex - 1 + rdImages.length) % rdImages.length];
       dots.innerHTML = rdImages.map((_, i) =>
         `<button class="rd-dot ${i === rdIndex ? 'active' : ''}" onclick="rdGo(${i})" aria-label="image ${i + 1}"></button>`
       ).join('');
