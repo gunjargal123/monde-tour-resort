@@ -602,11 +602,11 @@ function renderFooter() {
           <div>
             <h4 class="footer-title" data-i18n="nav_contact">Холбогдох</h4>
             <div class="footer-contact" style="flex-direction:column;align-items:flex-start;gap:0.625rem">
-              <p style="margin:0;line-height:1.6"><span style="color:var(--neutral-400)">${t('phone')}:</span> <a href="tel:${s.phone.replace(/\s/g, '')}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.phone)}</a></p>
-              ${s.phone2 ? `<p style="margin:0;line-height:1.6"><a href="tel:${s.phone2.replace(/\s/g, '')}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.phone2)}</a></p>` : ''}
-              <p style="margin:0;line-height:1.6"><span style="color:var(--neutral-400)">${t('email')}:</span> <a href="mailto:${escapeHtml(s.email)}" style="color:var(--white);font-weight:600;text-decoration:none">${escapeHtml(s.email)}</a></p>
-              <p style="margin:0;line-height:1.6"><span style="color:var(--neutral-400)">${t('opening_hours')}:</span> <strong style="color:var(--white);font-weight:600">${escapeHtml(s.businessHours)}</strong></p>
-              <p style="margin:0;line-height:1.6"><span style="color:var(--neutral-400)">${t('address')}:</span> <strong style="color:var(--white);font-weight:600">${escapeHtml(s.address)}</strong></p>
+              <p style="margin:0;line-height:1.6;color:var(--green-300)">${t('phone')}: <a href="tel:${s.phone.replace(/\s/g, '')}" style="color:var(--green-300);font-weight:600;text-decoration:none">${escapeHtml(s.phone)}</a></p>
+              ${s.phone2 ? `<p style="margin:0;line-height:1.6"><a href="tel:${s.phone2.replace(/\s/g, '')}" style="color:var(--green-300);font-weight:600;text-decoration:none">${escapeHtml(s.phone2)}</a></p>` : ''}
+              <p style="margin:0;line-height:1.6;color:var(--green-300)">${t('email')}: <a href="mailto:${escapeHtml(s.email)}" style="color:var(--green-300);font-weight:600;text-decoration:none">${escapeHtml(s.email)}</a></p>
+              <p style="margin:0;line-height:1.6;color:var(--green-300)">${t('opening_hours')}: <span style="font-weight:600">${escapeHtml(s.businessHours)}</span></p>
+              <p style="margin:0;line-height:1.6;color:var(--green-300)">${t('address')}: <span style="font-weight:600">${escapeHtml(s.address)}</span></p>
             </div>
           </div>
         </div>
