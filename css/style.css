@@ -279,7 +279,7 @@ p {
 
 .card-image {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
   overflow: hidden;
 }
 
@@ -966,7 +966,7 @@ p {
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
 }
 
 .gallery-item img {
