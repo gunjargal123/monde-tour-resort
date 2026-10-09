@@ -9,13 +9,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .pd-side-card { background: var(--surface); border: 1px solid var(--neutral-200); border-radius: var(--radius-xl); padding: 1.75rem; position: sticky; top: 110px; }
+    .pd-price-row { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--neutral-200); border-bottom: 1px solid var(--neutral-200); padding: 1rem 0; margin-bottom: 1.25rem; }
+    .pd-includes { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .pd-includes li { padding: .5rem 0 .5rem 1.1rem; position: relative; color: var(--neutral-600); font-size: .9375rem; }
+    .pd-includes li::before { content: '•'; position: absolute; left: .25rem; color: var(--green-600); }
+    .pd-chip { display: inline-flex; align-items: center; gap: .5rem; background: var(--beige-100); border-radius: 999px; padding: .625rem 1.125rem; font-size: .875rem; color: var(--neutral-800); }
+  </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
   <div id="mobile-cta-placeholder"></div>
 
   <main>
-    <section class="section" style="padding-top:120px">
+    <section class="section" style="padding-top:130px">
       <div class="container">
         <div id="package-detail"></div>
       </div>
@@ -38,63 +46,69 @@
 
       document.title = `${pkg.name} — Monde Tour`;
 
-      const backText = lang === 'en' ? '← Back to all packages' : '← Бүх багц буцах';
-      const packageLabel = t('packages_label');
-      const peopleLabel = t('people');
-      const durationLabel = t('duration');
-      const includesLabel = t('includes');
-      const priceLabel = lang === 'en' ? 'Price' : 'Үнэ';
-      const bookText = lang === 'en' ? 'Book' : 'Захиалах';
-      const requestText = lang === 'en' ? 'Send request' : 'Хүсэлт илгээх';
+      const L = lang === 'en' ? {
+        back: '← All packages', info: 'Information', price: 'Package Price',
+        includes: 'What\'s Included', book: 'Book Package',
+        meta: { people: 'People', duration: 'Duration', type: 'Type' }
+      } : {
+        back: '← Бүх багц', info: 'Мэдээлэл', price: 'Багцын үнэ',
+        includes: 'Багцад багтсан', book: 'Багц захиалах',
+        meta: { people: 'Хүний тоо', duration: 'Хугацаа', type: 'Төрөл' }
+      };
+
+      const typeLabels = {
+        family: lang === 'en' ? 'Family' : 'Гэр бүлийн',
+        couple: lang === 'en' ? 'Couple' : 'Хосуудын',
+        corporate: lang === 'en' ? 'Corporate' : 'Байгууллагын',
+        event: 'Event'
+      };
 
       const detail = document.getElementById('package-detail');
       detail.innerHTML = `
-        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">${backText}</a>
-        <div style="position:relative;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xl);margin-bottom:3rem">
-          <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}" style="width:100%;height:clamp(300px,45vw,540px);object-fit:cover;display:block">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,60,40,0.55) 0%,transparent 45%)"></div>
-          <div style="position:absolute;left:2rem;bottom:1.75rem;color:#fff">
-            <span class="section-label" style="color:var(--green-300);margin-bottom:0.25rem">${packageLabel}</span>
-            <h1 style="font-size:clamp(2rem,4vw,3rem);margin:0;color:#fff">${escapeHtml(pkg.name)}</h1>
-          </div>
-        </div>
-        <div class="grid grid-feature" style="gap:3rem;align-items:start">
+        <a href="packages.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">${L.back}</a>
+        <h1 style="font-size:clamp(1.75rem,3.5vw,2.5rem);margin-bottom:0.75rem">${escapeHtml(pkg.name)}</h1>
+        <p style="font-size:1.0625rem;color:var(--neutral-600);line-height:1.8;max-width:900px;margin-bottom:2rem">${escapeHtml(pkg.description)}</p>
+
+        <div class="grid" style="grid-template-columns:1fr 340px;gap:2.5rem;align-items:start" id="pd-layout">
           <div>
-            <p style="font-size:1.125rem;line-height:1.8;color:var(--neutral-600)">${escapeHtml(pkg.description)}</p>
-            <h3 style="margin-top:2.5rem;margin-bottom:1rem">${includesLabel}</h3>
-            <div class="grid grid-2" style="gap:0.75rem">
-              ${pkg.includes.map(i => `
-                <div style="display:flex;align-items:center;gap:0.75rem;background:var(--beige-100);padding:0.875rem 1rem;border-radius:var(--radius-lg)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span style="font-size:0.9375rem;color:var(--neutral-800)">${escapeHtml(i)}</span>
-                </div>
-              `).join('')}
+            <div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xl);height:clamp(280px,38vw,440px)">
+              <img src="${escapeHtml(pkg.image)}" alt="${escapeHtml(pkg.name)}" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:0.625rem;margin-top:2rem">
+              <span class="pd-chip">👥 ${escapeHtml(pkg.people)}</span>
+              <span class="pd-chip">⏱️ ${escapeHtml(pkg.duration)}</span>
+              <span class="pd-chip">🏷️ ${typeLabels[pkg.type] || escapeHtml(pkg.type)}</span>
+            </div>
+
+            <h3 style="margin-top:2.5rem;margin-bottom:1rem">${L.includes}</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:0.625rem">
+              ${pkg.includes.map(i => `<span class="pd-chip">✓ ${escapeHtml(i)}</span>`).join('')}
             </div>
           </div>
-          <div>
-            <div class="card" style="padding:1.75rem;position:sticky;top:110px">
-              <div class="grid grid-2" style="gap:1.25rem;margin-bottom:1.5rem">
-                <div style="background:var(--beige-100);border-radius:var(--radius-lg);padding:1rem">
-                  <p class="mb-1" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${peopleLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800);margin:0">👥 ${escapeHtml(pkg.people)}</p>
-                </div>
-                <div style="background:var(--beige-100);border-radius:var(--radius-lg);padding:1rem">
-                  <p class="mb-1" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${durationLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800);margin:0">⏱️ ${escapeHtml(pkg.duration)}</p>
-                </div>
-              </div>
-              <div style="border-top:1px solid var(--neutral-200);padding-top:1.25rem;margin-bottom:1.5rem">
-                <p class="mb-1" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
-                <p style="font-size:2rem;font-weight:700;color:var(--green-700);margin:0;line-height:1.1">${formatPrice(pkg.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${pkg.priceUnit}</span></p>
-              </div>
-              <div class="flex" style="flex-direction:column;gap:0.75rem">
-                <a href="booking.html?package=${pkg.id}" class="btn btn-primary btn-lg" style="width:100%">${bookText}</a>
-                <a href="booking.html?package=${pkg.id}" class="btn btn-secondary" style="width:100%">${requestText}</a>
-              </div>
+
+          <div class="pd-side-card">
+            <h3 style="margin:0 0 0.25rem;font-size:1.25rem">${L.info}</h3>
+            <div class="pd-price-row">
+              <span style="font-weight:600;color:var(--neutral-800)">${L.price}:</span>
+              <span style="font-size:1.375rem;font-weight:700;color:var(--green-700)">${formatPrice(pkg.price)}</span>
             </div>
+            <ul class="pd-includes">
+              <li>${L.meta.people}: ${escapeHtml(pkg.people)}</li>
+              <li>${L.meta.duration}: ${escapeHtml(pkg.duration)}</li>
+              <li>${L.meta.type}: ${typeLabels[pkg.type] || escapeHtml(pkg.type)}</li>
+            </ul>
+            <a href="booking.html?package=${pkg.id}" class="btn btn-primary btn-lg" style="width:100%">${L.book}</a>
           </div>
         </div>
       `;
+
+      const layout = document.getElementById('pd-layout');
+      const applyLayout = () => {
+        layout.style.gridTemplateColumns = window.innerWidth <= 900 ? '1fr' : '1fr 340px';
+      };
+      applyLayout();
+      window.addEventListener('resize', applyLayout);
     });
   </script>
 </body>

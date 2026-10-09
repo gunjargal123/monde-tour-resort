@@ -9,13 +9,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .rd-gallery { display: grid; grid-template-columns: 1fr 2.2fr; gap: 1rem; }
+    .rd-thumb { position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; }
+    .rd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+    .rd-thumb:hover img { transform: scale(1.04); }
+    .rd-thumb-prev { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); z-index: 2; }
+    .rd-main { position: relative; border-radius: var(--radius-lg); overflow: hidden; }
+    .rd-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rd-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,.9); color: var(--neutral-800); font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); z-index: 2; }
+    .rd-nav-btn:hover { background: #fff; }
+    .rd-dots { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: .5rem; z-index: 2; }
+    .rd-dot { width: 22px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.5); cursor: pointer; border: none; padding: 0; }
+    .rd-dot.active { background: #fff; }
+    .rd-side-card { background: var(--surface); border: 1px solid var(--neutral-200); border-radius: var(--radius-xl); padding: 1.75rem; position: sticky; top: 110px; }
+    .rd-price-row { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--neutral-200); border-bottom: 1px solid var(--neutral-200); padding: 1rem 0; margin-bottom: 1.25rem; }
+    .rd-extra { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .rd-extra li { padding: .5rem 0 .5rem 1.1rem; position: relative; color: var(--neutral-600); font-size: .9375rem; }
+    .rd-extra li::before { content: '•'; position: absolute; left: .25rem; color: var(--green-600); }
+    .rd-amenity { display: inline-flex; align-items: center; gap: .5rem; background: var(--beige-100); border-radius: 999px; padding: .625rem 1.125rem; font-size: .875rem; color: var(--neutral-800); }
+    .rd-rules { list-style: none; padding: 0; margin: 0; }
+    .rd-rules li { padding: .6rem 0 .6rem 1.25rem; position: relative; color: var(--neutral-600); line-height: 1.7; }
+    .rd-rules li::before { content: '•'; position: absolute; left: .25rem; color: var(--green-600); }
+    @media (max-width: 900px) {
+      .rd-gallery { grid-template-columns: 1fr; }
+      .rd-thumb { display: none; }
+    }
+  </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
   <div id="mobile-cta-placeholder"></div>
 
   <main>
-    <section class="section" style="padding-top:120px">
+    <section class="section" style="padding-top:130px">
       <div class="container">
         <div id="room-detail"></div>
       </div>
@@ -35,6 +62,9 @@
   <script src="js/main.js"></script>
   <script src="js/erxes-client.js"></script>
   <script>
+    let rdImages = [];
+    let rdIndex = 0;
+
     document.addEventListener('DOMContentLoaded', async () => {
       await loadErxesData();
       const params = new URLSearchParams(window.location.search);
@@ -45,67 +75,105 @@
 
       document.title = `${room.name} — Monde Tour`;
 
-      const peopleLabel = lang === 'en' ? 'people' : 'хүн';
-      const bookText = lang === 'en' ? 'Book' : 'Захиалах';
-      const requestText = lang === 'en' ? 'Booking request' : 'Захиалгын хүсэлт';
-      const backText = lang === 'en' ? '← Back to all rooms' : '← Бүх өрөө буцах';
-      const capacityLabel = t('capacity');
-      const bedsLabel = t('beds');
-      const facilitiesLabel = lang === 'en' ? 'Amenities' : 'Үндсэн тохижилт';
-      const priceLabel = lang === 'en' ? 'Price' : 'Үнэ';
-      const roomLabel = t('rooms_label');
+      const L = lang === 'en' ? {
+        back: '← All rooms', info: 'Information', perNight: 'Per Night',
+        extras: 'Extra Services', book: 'Book Room', amenities: 'Amenities',
+        rules: 'Room Rules', guests: 'guests',
+        extrasList: ['Breakfast', 'Guided nature walk', 'Bonfire setup', 'Traditional food experience'],
+        rulesList: [
+          'No smoking inside the room. Designated smoking areas are available outside.',
+          'Please conserve water and electricity by turning off lights and appliances when not in use.',
+          'Guests are responsible for locking the doors and securing their belongings.'
+        ]
+      } : {
+        back: '← Бүх өрөө', info: 'Мэдээлэл', perNight: 'Нэг шөнө',
+        extras: 'Нэмэлт үйлчилгээ', book: 'Өрөө захиалах', amenities: 'Тавилга',
+        rules: 'Дүрэм журам', guests: 'хүн',
+        extrasList: ['Өглөөний цай', 'Байгалийн хөтөчтэй алхалт', 'Галын түүдэг', 'Уламжлалт хоолны туршлага'],
+        rulesList: [
+          'Өрөөнд тамхи татахыг хориглоно. Гадна тусгайлсан татах газар байна.',
+          'Хэрэглэж байгаагүй үед гэрэл, цахилгаан хэрэгслийг унтрааж, ус, цахилгаан хэмнэнэ үү.',
+          'Зочид хаалгаа тээглэж, эд зүйлсээ хамгаалах үүрэгтэй.'
+        ]
+      };
+
+      rdImages = room.images && room.images.length ? room.images : ['images/camp-gers.jpg'];
+      rdIndex = 0;
 
       const detail = document.getElementById('room-detail');
       detail.innerHTML = `
-        <a href="rooms.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1rem">${backText}</a>
-        <div class="grid grid-2" style="gap:3rem;align-items:start">
+        <a href="rooms.html" class="text-muted" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">${L.back}</a>
+        <h1 style="font-size:clamp(1.75rem,3.5vw,2.5rem);margin-bottom:0.75rem;text-transform:none">${escapeHtml(room.name)}</h1>
+        <p style="font-size:1.0625rem;color:var(--neutral-600);line-height:1.8;max-width:900px;margin-bottom:2rem">${escapeHtml(room.description)}</p>
+
+        <div class="grid" style="grid-template-columns:1fr 340px;gap:2.5rem;align-items:start" id="rd-layout">
           <div>
-            <div class="gallery-grid" id="room-gallery" style="grid-auto-rows:180px">
-              ${room.images.map((img, i) => `
-                <div class="gallery-item ${i === 0 ? 'wide' : ''}" data-src="${escapeHtml(img)}" data-title="${escapeHtml(room.name)}">
-                  <img src="${escapeHtml(img)}" alt="${escapeHtml(room.name)} ${i + 1}">
-                </div>
-              `).join('')}
-            </div>
-          </div>
-          <div>
-            <span class="section-label">${roomLabel}</span>
-            <h1 style="font-size:2.5rem;margin-bottom:0.75rem">${escapeHtml(room.name)}</h1>
-            <p style="font-size:1.125rem">${escapeHtml(room.description)}</p>
-            <div class="card mt-6" style="padding:1.5rem">
-              <div class="grid grid-2" style="gap:1rem">
-                <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${capacityLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800)">${room.capacity} ${peopleLabel}</p>
-                </div>
-                <div>
-                  <p class="mb-0" style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);font-weight:700">${bedsLabel}</p>
-                  <p style="font-weight:600;color:var(--neutral-800)">${escapeHtml(room.beds)}</p>
-                </div>
+            <div class="rd-gallery" style="height:clamp(280px,38vw,440px)">
+              <div class="rd-thumb" onclick="rdPrev()">
+                <img id="rd-thumb-img" src="" alt="">
+                <button class="rd-nav-btn rd-thumb-prev">‹</button>
+              </div>
+              <div class="rd-main">
+                <img id="rd-main-img" src="" alt="">
+                <button class="rd-nav-btn" style="left:1rem" onclick="rdPrev()">‹</button>
+                <button class="rd-nav-btn" style="right:1rem" onclick="rdNext()">›</button>
+                <div class="rd-dots" id="rd-dots"></div>
               </div>
             </div>
-            <h3 style="margin-top:2rem;margin-bottom:1rem">${facilitiesLabel}</h3>
-            <ul class="feature-list">
-              ${room.facilities.map(f => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${escapeHtml(f)}</li>`).join('')}
+
+            <p style="margin-top:2rem;color:var(--neutral-600);line-height:1.8">${escapeHtml(room.shortDesc || room.description)}</p>
+
+            <h3 style="margin-top:2.5rem;margin-bottom:1rem">${L.amenities}</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:0.625rem">
+              ${room.facilities.map(f => `<span class="rd-amenity">✦ ${escapeHtml(f)}</span>`).join('')}
+              <span class="rd-amenity">👥 ${room.capacity}–${room.capacity + 2} ${L.guests}</span>
+            </div>
+
+            <h3 style="margin-top:2.5rem;margin-bottom:1rem">${L.rules}</h3>
+            <ul class="rd-rules">
+              ${L.rulesList.map(r => `<li>${escapeHtml(r)}</li>`).join('')}
             </ul>
-            <div class="card mt-6" style="padding:1.5rem;background:var(--green-50);border-color:var(--green-200)">
-              <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:1rem">
-                <div>
-                  <p class="mb-0" style="font-size:0.875rem;color:var(--neutral-600)">${priceLabel}</p>
-                  <p style="font-size:1.75rem;font-weight:700;color:var(--green-700)">${formatPrice(room.price)} <span style="font-size:1rem;font-weight:500;color:var(--neutral-600)">/${room.priceUnit}</span></p>
-                </div>
-                <div class="flex gap-3" style="flex-wrap:wrap">
-                  <a href="booking.html?room=${room.id}" class="btn btn-primary">${bookText}</a>
-                  <a href="booking.html?room=${room.id}" class="btn btn-secondary">${requestText}</a>
-                </div>
-              </div>
+          </div>
+
+          <div class="rd-side-card">
+            <h3 style="margin:0 0 0.25rem;font-size:1.25rem">${L.info}</h3>
+            <div class="rd-price-row">
+              <span style="font-weight:600;color:var(--neutral-800)">${L.perNight}:</span>
+              <span style="font-size:1.375rem;font-weight:700;color:var(--green-700)">${formatPrice(room.price)}</span>
             </div>
+            <h4 style="margin:0 0 0.25rem;font-size:1rem">${L.extras}</h4>
+            <ul class="rd-extra">
+              ${L.extrasList.map(e => `<li>${escapeHtml(e)}</li>`).join('')}
+            </ul>
+            <a href="booking.html?room=${room.id}" class="btn btn-primary btn-lg" style="width:100%">${L.book}</a>
           </div>
         </div>
       `;
 
-      initLightbox();
+      renderGallery();
+
+      const layout = document.getElementById('rd-layout');
+      if (window.innerWidth <= 900) layout.style.gridTemplateColumns = '1fr';
+      window.addEventListener('resize', () => {
+        layout.style.gridTemplateColumns = window.innerWidth <= 900 ? '1fr' : '1fr 340px';
+      });
     });
+
+    function renderGallery() {
+      const main = document.getElementById('rd-main-img');
+      const thumb = document.getElementById('rd-thumb-img');
+      const dots = document.getElementById('rd-dots');
+      if (!main) return;
+      main.src = rdImages[rdIndex];
+      if (thumb) thumb.src = rdImages[(rdIndex - 1 + rdImages.length) % rdImages.length];
+      dots.innerHTML = rdImages.map((_, i) =>
+        `<button class="rd-dot ${i === rdIndex ? 'active' : ''}" onclick="rdGo(${i})" aria-label="image ${i + 1}"></button>`
+      ).join('');
+    }
+
+    function rdGo(i) { rdIndex = i; renderGallery(); }
+    function rdPrev() { rdIndex = (rdIndex - 1 + rdImages.length) % rdImages.length; renderGallery(); }
+    function rdNext() { rdIndex = (rdIndex + 1) % rdImages.length; renderGallery(); }
   </script>
 </body>
 </html>
