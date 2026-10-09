@@ -253,6 +253,11 @@ function initAuthUI() {
   }
 }
 
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.remove();
+}
+
 function openAuthModal(mode = 'login') {
   const existing = document.getElementById('auth-modal');
   if (existing) existing.remove();
@@ -297,6 +302,16 @@ function openAuthModal(mode = 'login') {
 
   document.body.insertAdjacentHTML('beforeend', modalHtml);
   applyTranslations();
+
+  // Close on backdrop click
+  document.getElementById('auth-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'auth-modal') closeModal('auth-modal');
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal('auth-modal');
+  });
 
   document.getElementById('auth-form').addEventListener('submit', (e) => {
     e.preventDefault();
