@@ -584,6 +584,7 @@ function renderFooter() {
             <h4 class="footer-title" data-i18n="nav_contact">Холбогдох</h4>
             <div class="footer-contact">
               <a href="tel:${s.phone.replace(/\s/g, '')}">📞 ${escapeHtml(s.phone)}</a>
+              ${s.phone2 ? `<a href="tel:${s.phone2.replace(/\s/g, '')}">📞 ${escapeHtml(s.phone2)}</a>` : ''}
               <a href="mailto:${escapeHtml(s.email)}">✉️ ${escapeHtml(s.email)}</a>
               <a href="location.html">📍 ${escapeHtml(s.address)}</a>
             </div>

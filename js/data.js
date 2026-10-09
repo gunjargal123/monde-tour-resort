@@ -6,10 +6,11 @@ const defaultData = {
   settings: {
     siteName: "Monde Tour",
     tagline: "Байгальтай ойрхон, тав тухтай амралтыг танд",
-    phone: "+976 9911 2233",
-    email: "info@mondetour.mn",
+    phone: "+976 9902 4765",
+    phone2: "+976 8009 8355",
+    email: "mondetour.mn@gmail.com",
     address: "Тэрэлж, Говьсүмбэр аймаг, Монгол",
-    facebook: "https://facebook.com/mondetour",
+    facebook: "https://www.facebook.com/MondeTour.Official",
     instagram: "https://instagram.com/mondetour",
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937604!2d107.430995!3d47.89437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDUzJzM5LjciTiAxMDfCsDI1JzUxLjYiRQ!5e0!3m2!1sen!2smn!4v1699999999999!5m2!1sen!2smn",
     mapLink: "https://maps.google.com/?q=47.894370,107.430995",
@@ -731,6 +732,13 @@ function getData() {
         stored.i18n[lang][key] = defaultData.i18n[lang][key];
       }
     });
+  });
+
+  // Force-sync contact settings (site owner updates these)
+  ['phone', 'phone2', 'email', 'facebook', 'instagram', 'address'].forEach(key => {
+    if (defaultData.settings[key] !== undefined) {
+      stored.settings[key] = defaultData.settings[key];
+    }
   });
 
   return stored;

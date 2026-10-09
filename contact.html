@@ -33,7 +33,8 @@
           <div class="service-card" style="text-align:left">
             <h3>📞 <span data-i18n="phone">Утас</span></h3>
             <p class="mb-2" id="phone-help">Шууд залгаж захиалга өгнө үү.</p>
-            <a href="tel:+97699112233" id="contact-phone" class="btn btn-outline btn-sm">+976 9911 2233</a>
+            <a href="tel:+97699024765" id="contact-phone" class="btn btn-outline btn-sm">+976 9902 4765</a>
+            <a href="tel:+97680098355" id="contact-phone2" class="btn btn-outline btn-sm" style="margin-top:0.5rem">+976 8009 8355</a>
           </div>
           <div class="service-card" style="text-align:left">
             <h3>✉️ <span data-i18n="email">Имэйл</span></h3>
@@ -103,6 +104,14 @@
       const phoneEl = document.getElementById('contact-phone');
       phoneEl.textContent = s.phone;
       phoneEl.href = 'tel:' + s.phone.replace(/\s/g, '');
+
+      const phone2El = document.getElementById('contact-phone2');
+      if (s.phone2) {
+        phone2El.textContent = s.phone2;
+        phone2El.href = 'tel:' + s.phone2.replace(/\s/g, '');
+      } else {
+        phone2El.style.display = 'none';
+      }
 
       const emailEl = document.getElementById('contact-email');
       emailEl.textContent = s.email;
